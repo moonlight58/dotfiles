@@ -1,0 +1,71 @@
+
+[window]
+padding.x = 0
+padding.y = 0
+dynamic_padding = false
+opacity = 1
+decorations = "None"
+decorations_theme_variant = "Dark"
+
+[font]
+normal.family = "IosevkaTerm Nerd Font"
+bold.family = "IosevkaTerm Nerd Font"
+italic.family = "IosevkaTerm Nerd Font"
+bold_italic.family = "IosevkaTerm Nerd Font"
+size = 13.0
+
+[colors.primary]
+background = '0x1a1b26' 
+foreground = "0xc0caf5"
+
+[colors.selection]
+text = "#131311"
+background = "#c5c9a8"
+
+[colors.normal]
+black = "0x15161e"
+blue = "#3a6ab9"
+cyan = "#0092c1"
+green = "#057a3e"
+magenta = "#a2498a"
+red = "#ab4943"
+white = "0xa9b1d6"
+yellow = "#a68735"
+
+[colors.bright]
+black = "0x414868"
+blue = "0x7aa2f7"
+cyan = "0x7dcfff"
+green = "0x9ece6a"
+magenta = "#cf93ec"
+red = "0xf7768e"
+white = "0xc0caf5"
+yellow = "0xe0af68"
+
+[bell]
+animation = "Linear"
+duration = 0
+color = "#ffffff"
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[mouse]
+hide_when_typing = false
+
+[terminal.shell]
+program = "/bin/bash"   # Change selon ton shell (/bin/zsh, /bin/fish, etc.)
+args = ["--login"]
+
+[env]
+TERM = "xterm-256color"
+
+[general]
+# ~/.config/alacritty/alacritty.toml
+# Catppuccin Mocha theme (conversion depuis kitty.conf)
+# Auteur du thème : Catppuccin Org
+
+live_config_reload = true
+
+[terminal]
