@@ -239,6 +239,129 @@ vim.api.nvim_create_user_command(
   end,
   { nargs = "*" }
 )
+
+
+
+local function sort_c_functions(opts)
+    local start_line, end_line
+
+    -- If no range was provided, use the entire buffer
+    if opts.range == 0 then
+        start_line = 0
+        end_line = vim.api.nvim_buf_line_count(0)
+    else
+        start_line = opts.line1 - 1
+        end_line = opts.line2
+    end
+
+    local lines = vim.api.nvim_buf_get_lines(0, start_line, end_line, false)
+    local blocks = {}
+    local current = nil
+    local brace_level = 0
+
+    local function is_func_decl(line)
+        return line:match("^%s*[%w_%*%s]+%s+[%w_]+%s*%(")
+    end
+
+    local function is_comment(line)
+        if line:match("^%s*//") then return true end
+        if line:match("^%s*/%*") then return true end
+        if line:match("%*/%s*$") then return true end
+        return false
+    end
+
+    -- Pull comment block above a function
+    local function pull_comment_block(index)
+        local comment_block = {}
+        local i = index - 1
+
+        while i >= 1 do
+            local line = lines[i]
+            if line:match("^%s*$") then
+                table.insert(comment_block, 1, line)
+
+            elseif is_comment(line) then
+                table.insert(comment_block, 1, line)
+
+                -- If block comment start found, keep going upward
+                if line:match("^%s*/%*") then
+                    -- Continue until block comment ends
+                    i = i - 1
+                    while i >= 1 and not lines[i]:match("%*/%s*$") do
+                        table.insert(comment_block, 1, lines[i])
+                        i = i - 1
+                    end
+                    if i >= 1 then
+                        table.insert(comment_block, 1, lines[i])
+                    end
+                end
+
+            else
+                break
+            end
+            i = i - 1
+        end
+
+        return comment_block
+    end
+
+    local i = 1
+    while i <= #lines do
+        local line = lines[i]
+
+        if not current and is_func_decl(line) then
+            -- Pull the comment block ABOVE the function
+            local comments = pull_comment_block(i)
+
+            current = {
+                header = line,
+                body = {},
+                full_block = comments,
+            }
+
+            for _, c in ipairs(comments) do
+                table.insert(current.full_block, c)
+            end
+            table.insert(current.full_block, line)
+
+            brace_level = select(2, line:gsub("{", ""))
+                        - select(2, line:gsub("}", ""))
+
+        elseif current then
+            table.insert(current.full_block, line)
+            brace_level = brace_level + select(2, line:gsub("{", ""))
+                        - select(2, line:gsub("}", ""))
+
+            if brace_level == 0 then
+                table.insert(blocks, current)
+                current = nil
+            end
+        end
+
+        i = i + 1
+    end
+
+    -- Sort by function name (header line)
+    table.sort(blocks, function(a, b)
+        return a.header < b.header
+    end)
+
+    -- Rebuild output
+    local out = {}
+    for _, blk in ipairs(blocks) do
+        vim.list_extend(out, blk.full_block)
+        table.insert(out, "")
+    end
+
+    vim.api.nvim_buf_set_lines(0, start_line, end_line, false, out)
+end
+
+vim.api.nvim_create_user_command(
+    "SortCFunctions",
+    sort_c_functions,
+    { range = true }
+)
+
 EOF
 
 
