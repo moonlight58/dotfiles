@@ -240,12 +240,9 @@ vim.api.nvim_create_user_command(
   { nargs = "*" }
 )
 
-
-
 local function sort_c_functions(opts)
     local start_line, end_line
 
-    -- If no range was provided, use the entire buffer
     if opts.range == 0 then
         start_line = 0
         end_line = vim.api.nvim_buf_line_count(0)
@@ -256,92 +253,90 @@ local function sort_c_functions(opts)
 
     local lines = vim.api.nvim_buf_get_lines(0, start_line, end_line, false)
     local blocks = {}
-    local current = nil
-    local brace_level = 0
+    local i = 1
+    local n = #lines
 
     local function is_func_decl(line)
         return line:match("^%s*[%w_%*%s]+%s+[%w_]+%s*%(")
     end
 
-    local function is_comment(line)
-        if line:match("^%s*//") then return true end
-        if line:match("^%s*/%*") then return true end
-        if line:match("%*/%s*$") then return true end
-        return false
-    end
-
-    -- Pull comment block above a function
-    local function pull_comment_block(index)
-        local comment_block = {}
-        local i = index - 1
-
-        while i >= 1 do
-            local line = lines[i]
-            if line:match("^%s*$") then
-                table.insert(comment_block, 1, line)
-
-            elseif is_comment(line) then
-                table.insert(comment_block, 1, line)
-
-                -- If block comment start found, keep going upward
-                if line:match("^%s*/%*") then
-                    -- Continue until block comment ends
-                    i = i - 1
-                    while i >= 1 and not lines[i]:match("%*/%s*$") do
-                        table.insert(comment_block, 1, lines[i])
-                        i = i - 1
-                    end
-                    if i >= 1 then
-                        table.insert(comment_block, 1, lines[i])
-                    end
-                end
-
-            else
-                break
-            end
-            i = i - 1
-        end
-
-        return comment_block
-    end
-
-    local i = 1
-    while i <= #lines do
+    while i <= n do
         local line = lines[i]
 
-        if not current and is_func_decl(line) then
-            -- Pull the comment block ABOVE the function
-            local comments = pull_comment_block(i)
+        -- Try detecting function header
+        if is_func_decl(line) then
+            -- Collect comment lines immediately above
+            local header_start = i
+            local comment_block = {}
 
-            current = {
+            local j = i - 1
+            while j >= 1 do
+                local l = lines[j]
+
+                if l:match("^%s*$") or l:match("^%s*//") or l:match("^%s*/%*") or l:match("%*/%s*$") then
+                    table.insert(comment_block, 1, l)
+                    header_start = j
+                    j = j - 1
+                else
+                    break
+                end
+            end
+
+            -- Now collect function body until matching braces
+            local body = {}
+            local brace_level = 0
+            local found_brace = false
+
+            -- Detect initial braces on header line
+            do
+                local opens = select(2, line:gsub("{", ""))
+                local closes = select(2, line:gsub("}", ""))
+                brace_level = brace_level + opens - closes
+                if opens > 0 then found_brace = true end
+            end
+
+            table.insert(body, line)
+            i = i + 1
+
+            -- Continue until function body ends
+            while i <= n do
+                local l = lines[i]
+                table.insert(body, l)
+
+                local opens = select(2, l:gsub("{", ""))
+                local closes = select(2, l:gsub("}", ""))
+                brace_level = brace_level + opens - closes
+
+                if opens > 0 then found_brace = true end
+
+                if found_brace and brace_level == 0 then
+                    break
+                end
+
+                i = i + 1
+            end
+
+            local full_block = {}
+            vim.list_extend(full_block, comment_block)
+            vim.list_extend(full_block, body)
+
+            table.insert(blocks, {
                 header = line,
-                body = {},
-                full_block = comments,
-            }
+                block = full_block,
+            })
 
-            for _, c in ipairs(comments) do
-                table.insert(current.full_block, c)
-            end
-            table.insert(current.full_block, line)
-
-            brace_level = select(2, line:gsub("{", ""))
-                        - select(2, line:gsub("}", ""))
-
-        elseif current then
-            table.insert(current.full_block, line)
-            brace_level = brace_level + select(2, line:gsub("{", ""))
-                        - select(2, line:gsub("}", ""))
-
-            if brace_level == 0 then
-                table.insert(blocks, current)
-                current = nil
-            end
         end
 
         i = i + 1
     end
 
-    -- Sort by function name (header line)
+    -- If we found no functions, do nothing
+    if #blocks == 0 then
+        vim.notify("SortCFunctions: No functions found.", vim.log.levels.WARN)
+        return
+    end
+
+    -- Sort blocks alphabetically by function header
     table.sort(blocks, function(a, b)
         return a.header < b.header
     end)
@@ -349,18 +344,16 @@ local function sort_c_functions(opts)
     -- Rebuild output
     local out = {}
     for _, blk in ipairs(blocks) do
-        vim.list_extend(out, blk.full_block)
+        vim.list_extend(out, blk.block)
         table.insert(out, "")
     end
 
+    -- Write sorted version back
     vim.api.nvim_buf_set_lines(0, start_line, end_line, false, out)
 end
 
-vim.api.nvim_create_user_command(
-    "SortCFunctions",
-    sort_c_functions,
-    { range = true }
-)
+vim.api.nvim_create_user_command("SortCFunctions", sort_c_functions, { range = true })
+
 
 EOF
 

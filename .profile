@@ -46,11 +46,12 @@ COLOR_R="57,57,57"
 COLOR_RESET="\e[0m"
 COLOR_RUBY="196,196,196"
 COLOR_RUST="214,100,0"
-COLOR_SHELL="123,123,123"
+COLOR_SHELL="18,189,13"
 COLOR_TOML="255,255,255"
 COLOR_TYPESCRIPT="69,69,69"
 COLOR_VUE="29,29,29"
 COLOR_YAML="161,161,161"
+COLOR_ZIP="236,165,23"
 
 
 custom-ls() {
@@ -77,7 +78,7 @@ custom-ls() {
             colored_item="$(COLOR_RGB "$COLOR_DIR")󰉋 ${item}${COLOR_RESET}"
         elif [ -x "$item" ]; then
             # Executable file
-            colored_item="$(COLOR_RGB "$COLOR_EXECUTABLE")󰈔 ${item}${COLOR_RESET}"
+            colored_item="$(COLOR_RGB "$COLOR_EXECUTABLE") ${item}${COLOR_RESET}"
         else
             case "$item" in
                 *.asm|*.s)
@@ -181,6 +182,9 @@ custom-ls() {
                     ;;
                 *.yaml)
                     colored_item="$(COLOR_RGB "$COLOR_YAML") ${item}${COLOR_RESET}"
+                    ;;
+                *.zip|*.tgz)
+                    colored_item="$(COLOR_RGB "$COLOR_ZIP") ${item}${COLOR_RESET}"
                     ;;
                 Makefile|makefile|*.mk)
                     colored_item="$(COLOR_RGB "$COLOR_MAKEFILE") ${item}${COLOR_RESET}"
