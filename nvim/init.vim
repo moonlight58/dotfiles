@@ -1,4 +1,4 @@
-""" Moonlight58 init.vim """
+"" Moonlight58 init.vim """
 
 """ Vim-Plug
 call plug#begin()
@@ -6,6 +6,7 @@ call plug#begin()
 " Core (treesitter, nvim-lspconfig, nvim-cmp, nvim-telescope, nvim-lualine)
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/playground'
+Plug 'windwp/nvim-ts-autotag'
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
@@ -39,13 +40,15 @@ Plug 'KabbAmine/vCoolor.vim'
 Plug 'dkarter/bullets.vim'
 Plug 'wellle/context.vim'
 Plug 'antoinemadec/FixCursorHold.nvim'
+Plug 'norcalli/nvim-colorizer.lua'
 
 " Functionalities - Python
 Plug 'psf/black', { 'branch': 'stable' }
 Plug 'heavenshell/vim-pydocstring'
 
-" Aesthetics - Colorschemes
-Plug 'dracula/vim', { 'as': 'dracula' }
+" Aesthetics - colorschemes
+Plug 'scottmckendry/cyberdream.nvim', { 'as': 'cyberdream' }
+Plug 'rmehri01/onenord.nvim', { 'branch': 'main', 'as': 'onenord' }
 Plug 'zaki/zazen'
 Plug 'yuttie/hydrangea-vim'
 
@@ -94,46 +97,21 @@ autocmd FileType htmldjango inoremap {# {#  #}<left><left><left>
 autocmd FileType markdown setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType journal setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
-""" Coloring
+" Cyberdream configuration
+lua << EOF
+require("cyberdream").setup({
+    transparent = true,
+    italic_comments = true,
+    hide_fillchars = true,
+    borderless_telescope = false,
+})
+EOF
 
-" Functions and autocmds to run whenever changing colorschemes
-function! TransparentBackground()
-    highlight Normal guibg=NONE ctermbg=NONE
-    highlight LineNr guibg=NONE ctermbg=NONE
-    set fillchars+=vert:\│
-    highlight WinSeparator gui=NONE guibg=NONE guifg=#444444 cterm=NONE ctermbg=NONE ctermfg=gray
-    highlight VertSplit gui=NONE guibg=NONE guifg=#444444 cterm=NONE ctermbg=NONE ctermfg=gray
-endfunction
-
-" Use these colors for Pmenu, CmpPmenusBorder and TelescopeBorder when using dracula colorscheme
-function! DraculaTweaks()
-    " Pmenu colors when not using bordered windows
-    highlight Pmenu guibg=#363948
-    highlight PmenuSbar guibg=#363948
-    " Completion/documentation Pmenu border color when using bordered windows
-    highlight link CmpPmenuBorder NonText
-    " Telescope borders
-    highlight link TelescopeBorder Constant
-endfunction
-
-augroup MyColors
-    autocmd!
-    autocmd ColorScheme dracula call DraculaTweaks()
-    "autocmd ColorScheme * call TransparentBackground() " uncomment if you are using a translucent terminal and you want nvim to use that
-augroup END
-
-color dracula
+" Load the theme
+colorscheme onenord
 set termguicolors
 
 """ Core plugin configuration (vim)
-
-" Treesitter
-augroup DraculaTreesitterSourcingFix
-    autocmd!
-    autocmd ColorScheme dracula runtime after/plugin/dracula.vim
-    syntax on
-augroup end
-
 " nvim-cmp
 set completeopt=menu,menuone,noselect
 
@@ -144,6 +122,8 @@ let g:signify_sign_change = '│'
 hi DiffDelete guifg=#ff5555 guibg=none
 
 " indentLine
+let g:indentLine_char = '▏'
+let g:indentLine_defaultGroup = 'NonText'
 let g:indentLine_char = '▏'
 let g:indentLine_defaultGroup = 'NonText'
 " Disable indentLine from concealing json and markdown syntax (e.g. ```)
@@ -174,6 +154,7 @@ servers = {
     'pyright',
     --'tsserver', -- uncomment for typescript. See https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md for other language servers
 }
+
 require('treesitter-config')
 require('nvim-cmp-config')
 require('lspconfig-config')
@@ -181,6 +162,7 @@ require('telescope-config')
 require('lualine-config')
 require('nvim-tree-config')
 require('diagnostics')
+require'colorizer'.setup()
 
 require('render-markdown').setup({
     -- You can customize the options here, for example:
@@ -206,6 +188,15 @@ vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
     require("nvim-tree.api").tree.open()
   end
+})
+
+require('nvim-ts-autotag').setup({
+  opts = {
+    -- Defaults
+    enable_close = true, -- Auto close tags
+    enable_rename = true, -- Auto rename pairs of tags
+    enable_close_on_slash = false -- Auto close on trailing </
+  }
 })
 
 -- Find Replace string Project Wide Context
@@ -371,30 +362,28 @@ endfunction
 
 " Core
 let mapleader=","
-nmap <leader>q :NvimTreeFindFileToggle<CR>
-nmap \ <leader>q
-nmap <leader>r :so ~/.config/nvim/init.vim<CR>
-nmap <leader>t :call TrimWhitespace()<CR>
-xmap <leader>a gaip*
+nmap <S-Tab> :bprevious<CR>
+nmap <Tab> :bnext<CR>
+nmap <leader>$s <C-w>s<C-w>j:terminal<CR>:set nonumber<CR><S-a>
+nmap <leader>$v <C-w>v<C-w>l:terminal<CR>:set nonumber<CR><S-a>
 nmap <leader>a gaip*
 nmap <leader>h :RainbowParentheses!!<CR>
 nmap <leader>j :set filetype=journal<CR>
 nmap <leader>k :ColorToggle<CR>
 nmap <leader>l :Limelight!!<CR>
-xmap <leader>l :Limelight!!<CR>
-nmap <silent> <leader><leader> :noh<CR>
-nmap <Tab> :bnext<CR>
-nmap <S-Tab> :bprevious<CR>
-nmap <leader>$s <C-w>s<C-w>j:terminal<CR>:set nonumber<CR><S-a>
-nmap <leader>$v <C-w>v<C-w>l:terminal<CR>:set nonumber<CR><S-a>
 nmap <leader>o :AerialToggle!<CR>
+nmap <leader>q :NvimTreeFindFileToggle<CR>
+nmap <leader>r :so ~/.config/nvim/init.vim<CR>
+nmap <leader>t :call TrimWhitespace()<CR>
 nmap <leader>vt :vsplit<CR>
+nmap <silent> <leader><leader> :noh<CR>
+nmap \ <leader>q
+xmap <leader>a gaip*
+xmap <leader>l :Limelight!!<CR>
 
 " Python
 autocmd Filetype python nmap <leader>d <Plug>(pydocstring)
 autocmd FileType python nmap <leader>p :Black<CR>
-
-" Solidity (requires: npm install --save-dev prettier prettier-plugin-solidity)
 autocmd Filetype solidity nmap <leader>p :0,$!npx prettier %<CR>
 
 " Telescope mappings

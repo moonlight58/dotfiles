@@ -22,15 +22,12 @@ COLOR_EXECUTABLE="0,255,0"
 COLOR_GIT="215,95,0"
 COLOR_GO="95,215,255"
 COLOR_GODOT="175,255,255"
-COLOR_GRADLE_END="35,218,40"
-COLOR_GRADLE_START="1,48,57"
+COLOR_GRADLE="45,183,198"
 COLOR_HTML="228,77,37"
 COLOR_JAVA="255,95,0"
 COLOR_JAVASCRIPT="255,255,0"
-COLOR_JSON_END="188,188,188"
-COLOR_JSON_START="118,118,118"
-COLOR_KOTLIN_END="255,65,105"
-COLOR_KOTLIN_START="133,76,254"
+COLOR_JSON="193,174,28"
+COLOR_KOTLIN="151,67,184"
 COLOR_LICENSE="145,152,161"
 COLOR_LUA="183,183,229"
 COLOR_MAKEFILE="95,255,0"
@@ -38,9 +35,8 @@ COLOR_MARKDOWN="255,255,255"
 COLOR_NEOVIM="118,175,65"
 COLOR_NIM="226,226,226"
 COLOR_NPM="160,160,160"
-COLOR_PHP="85,85,85"
-COLOR_PYTHON_END="255,255,0"
-COLOR_PYTHON_START="0,95,255"
+COLOR_PHP="138,147,189"
+COLOR_PYTHON="255,188,3"
 COLOR_QT="190,190,190"
 COLOR_R="57,57,57"
 COLOR_RESET="\e[0m"
@@ -75,133 +71,134 @@ custom-ls() {
         local colored_item=""
         if [ -d "$item" ]; then
             # Directory
-            colored_item="$(COLOR_RGB "$COLOR_DIR")󰉋 ${item}${COLOR_RESET}"
+            colored_item="$(COLOR_RGB "$COLOR_DIR")󰉋 ${COLOR_RESET}${item}/"
         elif [ -x "$item" ]; then
             # Executable file
-            colored_item="$(COLOR_RGB "$COLOR_EXECUTABLE") ${item}${COLOR_RESET}"
+            colored_item="$(COLOR_RGB "$COLOR_EXECUTABLE") ${COLOR_RESET}${item}"
         else
             case "$item" in
                 *.asm|*.s)
-                    colored_item="$(COLOR_RGB "$COLOR_ASM") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_ASM") ${COLOR_RESET}${item}"
                     ;;
                 *.c)
-                    colored_item="$(COLOR_RGB "$COLOR_C_FILE") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_C_FILE") ${COLOR_RESET}${item}"
                     ;;
                 *.cmake)
-                    colored_item="$(COLOR_RGB "$COLOR_CMAKE") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_CMAKE") ${COLOR_RESET}${item}"
                     ;;
                 *.cpp)
-                    colored_item="$(COLOR_RGB "$COLOR_CPP") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_CPP") ${COLOR_RESET}${item}"
                     ;;
                 *.cr)
-                    colored_item="$(COLOR_RGB "$COLOR_CRYSTAL") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_CRYSTAL") ${COLOR_RESET}${item}"
                     ;;
                 *.css|*.scss)
-                    colored_item="$(COLOR_RGB "$COLOR_CSS") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_CSS") ${COLOR_RESET}${item}"
                     ;;
                 *.git|.gitignore)
-                    colored_item="$(COLOR_RGB "$COLOR_GIT")󰊢 ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_GIT")󰊢 ${COLOR_RESET}${item}"
                     ;;
                 *.go)
-                    colored_item="$(COLOR_RGB "$COLOR_GO") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_GO") ${COLOR_RESET}${item}"
                     ;;
                 *.godot)
-                    colored_item="$(COLOR_RGB "$COLOR_GODOT") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_GODOT") ${COLOR_RESET}${item}"
                     ;;
                 *.gradle)
-                    colored_item=$(print_gradient_color " $item" "$COLOR_GRADLE_START" "$COLOR_GRADLE_END")
+                    colored_item="$(COLOR_RGB "$COLOR_GRADLE") ${COLOR_RESET}${item}"
                     ;;
                 *.h)
-                    colored_item="$(COLOR_RGB "$COLOR_C_HEADER") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_C_HEADER") ${COLOR_RESET}${item}"
                     ;;
                 *.html|*.htm)
-                    colored_item="$(COLOR_RGB "$COLOR_HTML") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_HTML") ${COLOR_RESET}${item}"
                     ;;
                 *.ino)
-                    colored_item="$(COLOR_RGB "$COLOR_ARDUINO") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_ARDUINO") ${COLOR_RESET}${item}"
                     ;;
                 *.java)
-                    colored_item="$(COLOR_RGB "$COLOR_JAVA") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_JAVA") ${COLOR_RESET}${item}"
                     ;;
                 *.json)
-                    colored_item=$(print_gradient_color " $item" "$COLOR_JSON_START" "$COLOR_JSON_END")
+                    colored_item="$(COLOR_RGB "$COLOR_JSON") ${COLOR_RESET}${item}"
                     ;;
                 *.js|*.jsx)
-                    colored_item="$(COLOR_RGB "$COLOR_JAVASCRIPT") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_JAVASCRIPT") ${COLOR_RESET}${item}"
                     ;;
                 *.kt)
-                    colored_item=$(print_gradient_color " $item" "$COLOR_KOTLIN_START" "$COLOR_KOTLIN_END")
+                    colored_item="$(COLOR_RGB "$COLOR_KOTLIN") ${COLOR_RESET}${item}"
                     ;;
                 *.lua)
-                    colored_item="$(COLOR_RGB "$COLOR_LUA")󰢱 ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_LUA")󰢱 ${COLOR_RESET}${item}"
                     ;;
                 *.md)
-                    colored_item="$(COLOR_RGB "$COLOR_MARKDOWN") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_MARKDOWN") ${COLOR_RESET}${item}"
                     ;;
                 *.net)
-                    colored_item="$(COLOR_RGB "$COLOR_DOTNET")󰪮 ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_DOTNET")󰪮 ${COLOR_RESET}${item}"
                     ;;
                 *.nim)
-                    colored_item="$(COLOR_RGB "$COLOR_NIM") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_NIM") ${COLOR_RESET}${item}"
                     ;;
                 *.npm)
-                    colored_item="$(COLOR_RGB "$COLOR_NPM") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_NPM") ${COLOR_RESET}${item}"
                     ;;
                 *.php)
-                    colored_item="$(COLOR_RGB "$COLOR_PHP") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_PHP") ${COLOR_RESET}${item}"
                     ;;
                 *.py)
-                    colored_item=$(print_gradient_color " $item" "$COLOR_PYTHON_START" "$COLOR_PYTHON_END")
+                    colored_item="$(COLOR_RGB "$COLOR_PYTHON") ${COLOR_RESET}${item}"
                     ;;
                 *.qt)
-                    colored_item="$(COLOR_RGB "$COLOR_QT") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_QT") ${COLOR_RESET}${item}"
                     ;;
                 *.r)
-                    colored_item="$(COLOR_RGB "$COLOR_R") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_R") ${COLOR_RESET}${item}"
                     ;;
                 *.rb)
-                    colored_item="$(COLOR_RGB "$COLOR_RUBY") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_RUBY") ${COLOR_RESET}${item}"
                     ;;
                 *.rs)
-                    colored_item="$(COLOR_RGB "$COLOR_RUST") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_RUST") ${COLOR_RESET}${item}"
                     ;;
                 *.sh|*.bash|*.zsh)
-                    colored_item="$(COLOR_RGB "$COLOR_SHELL") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_SHELL") ${COLOR_RESET}${item}"
                     ;;
                 *.toml)
-                    colored_item="$(COLOR_RGB "$COLOR_TOML") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_TOML") ${COLOR_RESET}${item}"
                     ;;
                 *.ts|*.tsx)
-                    colored_item="$(COLOR_RGB "$COLOR_TYPESCRIPT") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_TYPESCRIPT") ${COLOR_RESET}${item}"
                     ;;
                 *.vim)
-                    colored_item="$(COLOR_RGB "$COLOR_NEOVIM") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_NEOVIM") ${COLOR_RESET}${item}"
                     ;;
                 *.vue)
-                    colored_item="$(COLOR_RGB "$COLOR_VUE") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_VUE") ${COLOR_RESET}${item}"
                     ;;
                 *.yaml)
-                    colored_item="$(COLOR_RGB "$COLOR_YAML") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_YAML") ${COLOR_RESET}${item}"
                     ;;
                 *.zip|*.tgz)
-                    colored_item="$(COLOR_RGB "$COLOR_ZIP") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_ZIP") ${COLOR_RESET}${item}"
                     ;;
                 Makefile|makefile|*.mk)
-                    colored_item="$(COLOR_RGB "$COLOR_MAKEFILE") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_MAKEFILE") ${COLOR_RESET}${item}"
                     ;;
                 LICENSE)
-                    colored_item="$(COLOR_RGB "$COLOR_LICENSE")󰗑 ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_LICENSE")󰗑 ${COLOR_RESET}${item}"
                     ;;
                 Dockerfile)
-                    colored_item="$(COLOR_RGB "$COLOR_DOCKER") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_DOCKER") ${COLOR_RESET}${item}"
                     ;;
                 *)
-                    colored_item="$(COLOR_RGB "$COLOR_DEFAULT") ${item}${COLOR_RESET}"
+                    colored_item="$(COLOR_RGB "$COLOR_DEFAULT") ${COLOR_RESET}${item}"
                     ;;
             esac
         fi
 
         colored_items+=("$colored_item")
+        visible_lengths+=("$visible_len")
     done
 
     # If no files, return
@@ -212,56 +209,64 @@ custom-ls() {
     # Calculate terminal width
     local term_width=$(tput cols)
 
-    # Find the maximum length of file names
+    # Find the maximum length of file names (accounting for the "/" on directories)
     local max_len=0
-    for item in "${items[@]}"; do
+    for i in "${!items[@]}"; do
+        local item="${items[$i]}"
         local len=${#item}
-        if [ $len -gt $max_len ]; then
-            max_len=$len
+            # Add 1 for the "/" if it's a directory
+            if [ -d "$item" ]; then
+                len=$((len + 1))
+            fi
+            if [ $len -gt $max_len ]; then
+                max_len=$len
+            fi
+        done
+
+        # Account for icon (3 chars: icon + space) and add 2 space padding between columns
+        local col_width=$((max_len + 3 + 2))
+
+        # Calculate the number of columns
+        local cols=$((term_width / col_width))
+        if [ $cols -lt 1 ]; then
+            cols=1
         fi
-    done
 
-    # Account for icon (3 chars: icon + space) and add 1 space padding between columns
-    local col_width=$((max_len + 3 + 2))
+        # Display in columns
+        local col=0
+        for i in "${!colored_items[@]}"; do
+            # Display the colored item
+            printf "%b" "${colored_items[$i]}"
 
-    # Calculate the number of columns
-    local cols=$((term_width / col_width))
-    if [ $cols -lt 1 ]; then
-        cols=1
-    fi
+            # Calculate padding: actual filename length + icon (3 chars) + "/" if directory
+            local visible_len=$((${#items[$i]} + 3))
+                if [ -d "${items[$i]}" ]; then
+                    visible_len=$((visible_len + 1))
+                fi
+                local padding=$((col_width - visible_len))
 
-    # Display in columns
-    local col=0
-    for i in "${!colored_items[@]}"; do
-        # Display the colored item
-        printf "%b" "${colored_items[$i]}"
-        
-        # Calculate padding: actual filename length + icon (3 chars)
-        local visible_len=$((${#items[$i]} + 3))
-        local padding=$((col_width - visible_len))
-        
-        # Add padding spaces
-        printf "%*s" "$padding" ""
+                # Add padding spaces
+                printf "%*s" "$padding" ""
 
-        col=$((col + 1))
+                col=$((col + 1))
 
-        if [ $col -ge $cols ]; then
-            printf "\n"
-            col=0
-        fi
-    done
+                if [ $col -ge $cols ]; then
+                    printf "\n"
+                    col=0
+                fi
+            done
 
-    # Final newline only if we're not at the start of a line
-    if [ $col -ne 0 ]; then
-        printf "\n"
-    fi
-}
+            # Final newline only if we're not at the start of a line
+            if [ $col -ne 0 ]; then
+                printf "\n"
+            fi
+        }
 
-COLOR_RGB() {
-    local arg="$1"
-    IFS=',' read -r r g b <<< "$(echo "$arg" | tr -d 'rgb()')"
-    echo -ne "\e[38;2;${r};${g};${b}m"
-}
+    COLOR_RGB() {
+        local arg="$1"
+        IFS=',' read -r r g b <<< "$(echo "$arg" | tr -d 'rgb()')"
+        echo -ne "\e[38;2;${r};${g};${b}m"
+    }
 
 # Function to print a gradient between two RGB colors
 print_gradient_color() {
@@ -273,18 +278,18 @@ print_gradient_color() {
     IFS=',' read -r end_r end_g end_b <<< "$(echo "$end_rgb" | tr -d 'rgb()')"
 
     local length=${#text}
-    local result=""
+        local result=""
 
-    for ((i=0; i<length; i++)); do
-        local ratio=$((i * 100 / (length - 1)))
-        local r=$((start_r + (end_r - start_r) * ratio / 100))
-        local g=$((start_g + (end_g - start_g) * ratio / 100))
-        local b=$((start_b + (end_b - start_b) * ratio / 100))
-        result+="$(COLOR_RGB "$r,$g,$b")${text:$i:1}"
-    done
+        for ((i=0; i<length; i++)); do
+            local ratio=$((i * 100 / (length - 1)))
+            local r=$((start_r + (end_r - start_r) * ratio / 100))
+            local g=$((start_g + (end_g - start_g) * ratio / 100))
+            local b=$((start_b + (end_b - start_b) * ratio / 100))
+            result+="$(COLOR_RGB "$r,$g,$b")${text:$i:1}"
+        done
 
-    echo -ne "${result}${COLOR_RESET}"
-}
+        echo -ne "${result}${COLOR_RESET}"
+    }
 
 # Custom cd Aliases
 alias cdspot="cd $HOME/Documents/github/spotCLI/"
@@ -320,6 +325,8 @@ alias pls="sudo"
 alias installquick="sudo apt install -y"
 alias removequick="sudo apt remove -y"
 alias updatequick="sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y"
+
+alias source-python="source venv/bin/activate"
 
 # Rust/Cargo environment setup to PATH
 export PATH="$HOME/.cargo/bin:$PATH"
@@ -566,34 +573,41 @@ git-create-repo() {
     fi
 
     echo "Select a git profile:"
-    local -a profiles names emails
+    local -a profiles names emails gh_users
     local in_user_section=0
-    local current_name="" current_email=""
+    local current_name="" current_email="" current_gh_user=""
 
     while IFS= read -r line; do
         if [[ "$line" =~ ^\[user\]$ ]]; then
             in_user_section=1
             current_name=""
             current_email=""
+            current_gh_user=""
         elif [[ $in_user_section -eq 1 ]]; then
             if [[ "$line" =~ ^[[:space:]]*name[[:space:]]*=[[:space:]]*(.+)$ ]]; then
                 current_name="${BASH_REMATCH[1]}"
             elif [[ "$line" =~ ^[[:space:]]*email[[:space:]]*=[[:space:]]*(.+)$ ]]; then
                 current_email="${BASH_REMATCH[1]}"
-                if [ -n "$current_name" ]; then
-                    profiles+=("$current_name <$current_email>")
-                    names+=("$current_name")
-                    emails+=("$current_email")
-                    in_user_section=0
-                fi
-            elif [[ "$line" =~ ^\[.*\]$ ]]; then
+            elif [[ "$line" =~ ^[[:space:]]*github[[:space:]]*=[[:space:]]*(.+)$ ]]; then
+                current_gh_user="${BASH_REMATCH[1]}"
+            fi
+
+            # When we have all three, add to arrays
+            if [[ -n "$current_name" && -n "$current_email" && -n "$current_gh_user" ]]; then
+                profiles+=("$current_name <$current_email> [@$current_gh_user]")
+                names+=("$current_name")
+                emails+=("$current_email")
+                gh_users+=("$current_gh_user")
                 in_user_section=0
             fi
+        elif [[ "$line" =~ ^\[.*\]$ ]]; then
+            in_user_section=0
         fi
     done < "$HOME/.git_identities"
 
     if [ ${#profiles[@]} -eq 0 ]; then
-        echo -e "\e[31m✗ No profile found in ~/.git_identities\e[0m"
+        echo -e "\e[31m✗ No complete profile found in ~/.git_identities\e[0m"
+        echo -e "\e[33mMake sure each [user] section has: name, email, and github\e[0m"
         return 1
     fi
 
@@ -602,13 +616,23 @@ git-create-repo() {
             local idx=$((REPLY - 1))
             git_name="${names[$idx]}"
             git_email="${emails[$idx]}"
+            gh_user="${gh_users[$idx]}"
             break
         else
             echo -e "\e[31m✗ Invalid selection. Please try again.\e[0m"
         fi
     done
 
-    echo -e "Selected profile: $git_name <$git_email>\n"
+    echo -e "Selected profile: $git_name <$git_email> [@$gh_user]\n"
+
+    # Switch GitHub CLI account
+    echo -e "\e[33mSwitching to GitHub account: $gh_user\e[0m"
+    if ! gh auth switch --user "$gh_user" 2>/dev/null; then
+        echo -e "\e[31m✗ Could not switch to GitHub user '$gh_user'\e[0m"
+        echo -e "\e[33mYou may need to authenticate this account first with: gh auth login\e[0m"
+        return 1
+    fi
+    echo -e "\e[32m✓ Switched to @$gh_user\e[0m\n"
 
     # Ask if repo already exists locally
     echo "Does the repo already exist locally? (y/n)"
@@ -618,7 +642,6 @@ git-create-repo() {
         # CASE 1: Existing repo - find and link
         echo -e "\nSearching for repo '$repo_name' on the system..."
 
-        # FIX: Recherche corrigée avec filtre après
         mapfile -t local_repos < <(\find ~ -type d -name "$repo_name" 2>/dev/null | while read -r dir; do
         [[ -d "$dir/.git" ]] && echo "$dir"
     done)
@@ -668,7 +691,6 @@ git-create-repo() {
             echo "# $repo_name" > README.md
             git add README.md
         else
-            # If README exists, add all files
             git add -A
         fi
         git commit -m "Initial commit" || {
