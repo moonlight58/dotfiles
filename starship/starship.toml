@@ -11,6 +11,7 @@ $directory\
 $git_branch\
 $git_status\
 $fill\
+$cmd_duration\
 $c\
 $cpp\
 $docker_context\
@@ -28,7 +29,6 @@ $r\
 $ruby\
 $rust\
 $zig\
-$cmd_duration\
 $line_break\
 [└](dimmed white)$character"""
 
@@ -85,7 +85,7 @@ deleted = '✘${count} '
 
 [cmd_duration]
 min_time = 500
-format = ' [$duration]($style) '
+format = ' [\[](dimmed white)[${duration}]($style)[\] ─](dimmed white)'
 style = "yellow"
 disabled = false
 
