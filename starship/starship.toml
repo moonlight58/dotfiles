@@ -1,96 +1,320 @@
-add_newline = false
-command_timeout = 1000
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = true
+palette = 'nordic'
 
 format = """
-$character\
-[](fg:white bg:#5f6a8e)\
-[█](fg:#5f6a8e bg:black)\
-$directory\
-[█](fg:#5f6a8e bg:#414868)\
-[$git_branch\
-$git_state\
-$git_status](bold bg:#414868 fg:white)\
-[](fg:#414868 bg:#282a34)\
-$fill\
-$cmd_duration\
-[](fg:#282a34 bg:bright-black)\
-[](fg:bright-black bg:#fb4183)\
-[█](fg:#fb4183)\
-[ ](fg:black bg:#fb4183)\
-[█](fg:#fb4183)\
+[┌ ](dimmed white)\
 $username\
-[](fg:bright-black bg:#bd93f9)\
-[█](fg:#bd93f9)\
-[󰌽 ](fg:#bd93f9 bg:black inverted)\
-[█](fg:#bd93f9)\
 $hostname\
+$directory\
+$git_branch\
+$git_status\
+$fill\
+$c\
+$cpp\
+$docker_context\
+$dotnet\
+$go\
+$gradle\
+$java\
+$kotlin\
+$lua\
+$nim\
+$nodejs\
+$php\
+$python\
+$r\
+$ruby\
+$rust\
+$zig\
+$cmd_duration\
 $line_break\
-[‎]()"""
-
-[character]
-format = "$symbol"
-error_symbol = "[█](fg:red bg:black)[ ERROR](fg:red bg:black inverted bold)[](fg:red bg:white)"
-success_symbol = "[█](fg:bright-white bg:black)[ PROMPT](fg:bright-white bg:black inverted bold)[](fg:bright-white bg:white)"
+[└](dimmed white)$character"""
 
 [fill]
-symbol = ' '
-style = 'bg:#282a34'
+symbol = '─'
+style = 'dimmed white'
 
-[package]
-disabled = false
-
-[cmd_duration]
-min_time = 1000
-show_milliseconds = false
-disabled = false
-format="[󰞌 $duration ]($style)"
-style="bold bg:#2E2F38"
-
-[directory]
-truncation_length = 5
-format = "[󰉋 $path]($style)[$lock_symbol]($lock_style)"
-style = "bold fg:bright-white bg:#5f6a8e"
-read_only = "🔒"
-read_only_style= "bold white"
+# left side
+[character]
+success_symbol = "[──](dimmed white)"
+error_symbol = "[╌┄](red)"
 
 [username]
+style_user = "white3"
+style_root = "dimmed red"
+format = '''[\[](dimmed white)[$user]($style)[\]](dimmed white)'''
+disabled = false
 show_always = true
-style_user = "fg:bright-white bg:bright-black"
-style_root = "fg:bright-white bg:bright-black"
-format = '[ Moon ]($style)'
+aliases = { "userdepinfo" = "moon" }
 
 [hostname]
-format = "[ Debian ]($style)"
 ssh_only = false
-trim_at = ".companyname.com"
+format = '[@\[](dimmed white)[$hostname](white3)[\]](dimmed white) '
 disabled = false
-style = "fg:bright-white bg:bright-black"
+aliases = { "hp-info-01" = "debian" }
 
-[git_commit]
-commit_hash_length = 8
-style = "bold white"
-
-[status]
-style = "bg:transparent"
-symbol = "💥 "
-format = '($style)'
-disabled = false
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+format = '[\(](dimmed white)[$path]($style)[\)](dimmed white) '
+style = "white"
+truncation_symbol = "…/"
+read_only = " 🔒"
+read_only_style = "dimmed red"
 
 [git_branch]
-format = " 󰘬 $branch"
-style = "bold fg:bright-black bg:#3d4052"
+format = "[$symbol$branch]($style) "
+symbol = "󰘬 "
+style = "cyan"
 
 [git_status]
-format = " $conflicted$untracked$modified$staged$renamed$deleted$ahead_behind$stashed"
-style = "cyan"
-conflicted = ""
-untracked = ""
-modified = ""
-staged = ""
-renamed = ""
-deleted = ""
-stashed = "≡"
+format = '([$all_status$ahead_behind]($style))'
+style = 'yellow'
+conflicted = '~${count} '
+stashed = '*${count} '
+ahead = '⇡${count} '
+behind = '⇣${count} '
+diverged = '⇠${behind_count} ⇢${ahead_count} '
+untracked = '?${count} '
+modified = '!${count} '
+staged = '+${count} '
+renamed = '»${count} '
+deleted = '✘${count} '
 
-[git_state]
-format = '\([$state( $progress_current/$progress_total)]($style)\) '
+[cmd_duration]
+min_time = 500
+format = ' [$duration]($style) '
+style = "yellow"
+disabled = false
+
+# right side
+## Languages
+[c]
+format = ' [\[](dimmed white)[$symbol $name $version]($style)[\]](dimmed white)'
+style = 'blue'
+symbol = ""
+commands = [ [ 'cc', '--version' ], [ 'gcc', '--version' ], [ 'clang', '--version' ] ]
+disabled = false
+
+[cpp]
+format = ' [\[](dimmed white)[$symbol $name $version]($style)[\]](dimmed white)'
+style = 'blue'
+symbol = ''
+detect_extensions = ['cpp', 'cc', 'cxx', 'c++', 'hpp', 'hh', 'hxx', 'h++', 'tcc']
+commands = [ [ 'c++', '--version' ], [ 'g++', '--version' ], [ 'clang++', '--version' ] ]
+disabled = false
+
+[conda]
+format = ' [\[](dimmed white)[$symbol $environment]($style)[\]](dimmed white)'
+style = 'green'
+symbol = ""
+disabled = false
+
+[container]
+format = ' [\[](dimmed white)[$symbol \[$name\] ](style)[\]](dimmed white)'
+style = 'red'
+symbol = ""
+disabled = false
+
+[docker_context]
+format = ' [\[](dimmed white)[$symbol $context]($style)[\]](dimmed white)'
+symbol = ""
+only_with_files = true
+detect_extensions = []
+detect_files = ['compose.yml', 'compose.yaml', 'docker-compose.yml', 'docker-compose.yaml', 'Dockerfile']
+detect_folders = []
+style = "cyan_base"
+disabled = false
+
+[dotnet]
+format = ' [\[](dimmed white)[$symbol $version]($style)[\]](dimmed white)'
+symbol = ".NET"
+version_format = 'v${major}.${minor}'
+heuristic = true
+detect_extensions = ['csproj', 'fsproj', 'xproj']
+detect_files = ['global.json', 'project.json', 'Directory.Build.props', 'Directory.Build.targets', 'Packages.props']
+
+style = "blue"
+disabled = false
+
+[golang]
+format = ' [\[](dimmed white)[$symbol $version]($style)[\]](dimmed white)'
+symbol = ""
+version_format = 'v${major}.${minor}'
+detect_extensions = ['go']
+detect_files = ['go.mod', 'go.sum', 'go.work', 'glide.yaml', 'Gopkg.yml', 'Gopkg.lock', '.go-version']
+detect_folders = ['Godeps']
 style = "cyan"
+not_capable_style = "dimmed red"
+disabled = false
+
+[gradle]
+format = ' [\[](dimmed white)[$symbol $version]($style)[\]](dimmed white)'
+symbol = ""
+version_format = 'v${major}.${minor}'
+detect_extensions = ['gradle', 'gradle.kts']
+detect_folders = ['gradle']
+style = "cyan"
+disabled = false
+recursive = false
+
+[java]
+format = ' [\[](dimmed white)[$symbol $version]($style)[\]](dimmed white)'
+symbol = ""
+version_format = 'v${major}.${minor}'
+detect_extensions = ['java', 'class', 'gradle', 'jar', 'cljs', 'cljc']
+style = 'orange_dim'
+disabled = false
+
+[kotlin]
+format = ' [\[](dimmed white)[$symbol $version]($style)[\]](dimmed white)'
+symbol = ""
+version_format = 'v${major}.${minor}'
+detect_extensions = ['kt', 'kts']
+style = "magenta_dim"
+disabled = false
+
+[lua]
+format = ' [\[](dimmed white)[$symbol $version]($style)[\]](dimmed white)'
+symbol = ""
+version_format = 'v${major}.${minor}'
+detect_extensions = ['lua']
+detect_files = ['.lua-version']
+detect_folders = ['lua']
+style = "blue0"
+lua_binary = 'lua'
+disabled = false
+
+[nim]
+format = ' [\[](dimmed white)[$symbol $version]($style)[\]](dimmed white)'
+symbol = ""
+version_format = 'v${major}.${minor}'
+detect_extensions = ['nim', 'nims', 'nimble']
+detect_files = ['nim.cfg']
+style = 'yellow_dim'
+disabled = false
+
+[nodejs]
+format = ' [\[](dimmed white)[node${symbol} ($version)]($style)[\]](dimmed white)'
+symbol = ""
+style = "green"
+disabled = false
+
+[php]
+format = ' [\[](dimmed white)[$symbol $version]($style)[\]](dimmed white)'
+symbol = ""
+version_format = 'v${major}.${minor}'
+detect_extensions = ['php']
+detect_files = ['composer.json', '.php-version']
+style = 'blue1'
+disabled = false
+
+[python]
+format = ' [\[](dimmed white)[$symbol$version]($style)[\]](dimmed white)'
+symbol = " "
+style = "yellow"
+disabled = false
+
+[rlang]
+format = ' [\[](dimmed white)[$symbol $version]($style)[\]](dimmed white)'
+symbol = ""
+version_format = 'v${major}.${minor}'
+detect_extensions = ['R', 'Rd', 'Rmd', 'Rproj', 'Rsx']
+detect_files = ['.Rprofile']
+detect_folders = ['.Rproj.user']
+style = 'blue'
+disabled = false
+
+[ruby]
+format = ' [\[](dimmed white)[$symbol $version]($style)[\]](dimmed white)'
+symbol = ""
+version_format = 'v${major}.${minor}'
+detect_extensions = ['rb']
+detect_files = ['Gemfile', '.ruby-version']
+detect_variables = ['RUBY_VERSION', 'RBENV_VERSION']
+style = 'red_dim'
+disabled = false
+
+[rust]
+format = ' [\[](dimmed white)[$symbol $version]($style)[\]](dimmed white)'
+symbol = ""
+version_format = 'v${major}.${minor}'
+detect_extensions = ['rs']
+detect_files = ['Cargo.toml']
+style = 'orange_bright'
+disabled = false
+
+[zig]
+format = ' [\[](dimmed white)[$symbol $version]($style)[\]](dimmed white)'
+symbol = ""
+version_format = 'v${major}.${minor}'
+detect_extensions = ['zig']
+style = 'yellow_base'
+disabled = false
+
+## Down
+
+[line_break]
+disabled = false
+
+# Palette
+# ------------------------------------------
+[palettes.nordic]
+
+# Blacks. Not in base Nord.
+black0 = '#191D24'
+black1 = '#1E222A'
+black2 = '#222630'
+
+# Grays
+gray0 = '#242933'
+# Polar Night.
+gray1 = '#2E3440'
+gray2 = '#3B4252'
+gray3 = '#434C5E'
+gray4 = '#4C566A'
+
+# A light blue/gray.
+# From @nightfox.nvim.
+gray5 = '#60728A'
+
+# Dim white.
+white0_normal = '#BBC3D4'
+white0_reduce_blue = '#C0C8D8'
+
+# Snow storm.
+white1 = '#D8DEE9'
+white2 = '#E5E9F0'
+white3 = '#ECEFF4'
+
+# Frost.
+blue0 = '#5E81AC'
+blue1 = '#81A1C1'
+blue2 = '#88C0D0'
+
+cyan_base = '#8FBCBB'
+cyan_bright = '#9FC6C5'
+cyan_dim = '#80B3B2'
+
+# Aurora.
+red_base = '#BF616A'
+red_bright = '#C5727A'
+red_dim = '#B74E58'
+
+orange_base = '#D08770'
+orange_bright = '#D79784'
+orange_dim = '#CB775D'
+
+yellow_base = '#EBCB8B'
+yellow_bright = '#EFD49F'
+yellow_dim = '#E7C173'
+
+green_base = '#A3BE8C'
+green_bright = '#B1C89D'
+green_dim = '#97B67C'
+
+magenta_base = '#B48EAD'
+magenta_bright = '#BE9DB8'
+magenta_dim = '#A97EA1'
