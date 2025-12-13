@@ -1,71 +1,71 @@
-
 [window]
-padding.x = 0
-padding.y = 0
+opacity = 0.95
+padding.x = 10
+padding.y = 10
+decorations = "none"
 dynamic_padding = false
-opacity = 1
-decorations = "None"
-decorations_theme_variant = "Dark"
 
 [font]
-normal.family = "IosevkaTerm Nerd Font"
-bold.family = "IosevkaTerm Nerd Font"
-italic.family = "IosevkaTerm Nerd Font"
-bold_italic.family = "IosevkaTerm Nerd Font"
-size = 13.0
+size = 11.0
+
+[font.normal]
+family = "Hurmit Nerd Font Mono"
+style = "Regular"
+
+[font.bold]
+family = "Hurmit Nerd Font Mono"
+style = "Bold"
+
+[font.italic]
+family = "Hurmit Nerd Font Mono"
+style = "Italic"
 
 [colors.primary]
-background = '0x1a1b26' 
-foreground = "0xc0caf5"
+background = "#1d1d1d"
+foreground = "#e8e8e8"
+
+[colors.cursor]
+text = "#1d1d1d"
+cursor = "#e8e8e8"
 
 [colors.selection]
-text = "#131311"
-background = "#c5c9a8"
+text = "#e8e8e8"
+background = "#404040"
 
 [colors.normal]
-black = "0x15161e"
-blue = "#3a6ab9"
-cyan = "#0092c1"
-green = "#057a3e"
-magenta = "#a2498a"
-red = "#ab4943"
-white = "0xa9b1d6"
-yellow = "#a68735"
+black = "#1a1a1a"
+red = "#8b6b6b"
+green = "#6b8b6b"
+yellow = "#8b8b6b"
+blue = "#6b6b8b"
+magenta = "#8b6b8b"
+cyan = "#6b8b8b"
+white = "#e8e8e8"
 
 [colors.bright]
-black = "0x414868"
-blue = "0x7aa2f7"
-cyan = "0x7dcfff"
-green = "0x9ece6a"
-magenta = "#cf93ec"
-red = "0xf7768e"
-white = "0xc0caf5"
-yellow = "0xe0af68"
+black = "#404040"
+red = "#b89090"
+green = "#90b890"
+yellow = "#b8b890"
+blue = "#9090b8"
+magenta = "#b890b8"
+cyan = "#90b8b8"
+white = "#ffffff"
 
-[bell]
-animation = "Linear"
-duration = 0
-color = "#ffffff"
+[cursor]
+style = "Block"
+unfocused_hollow = true
 
 [scrolling]
 history = 10000
 multiplier = 3
 
-[mouse]
-hide_when_typing = false
+[bell]
+animation = "EaseOutExpo"
+duration = 0
 
 [terminal.shell]
-program = "/bin/bash"   # Change selon ton shell (/bin/zsh, /bin/fish, etc.)
-args = ["--login"]
+program = "/bin/bash"
+args = ["-l"]
 
-[env]
-TERM = "xterm-256color"
 
-[general]
-# ~/.config/alacritty/alacritty.toml
-# Catppuccin Mocha theme (conversion depuis kitty.conf)
-# Auteur du thème : Catppuccin Org
-
-live_config_reload = true
-
-[terminal]

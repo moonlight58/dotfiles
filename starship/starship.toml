@@ -13,7 +13,7 @@ $git_status](bold bg:#414868 fg:white)\
 [](fg:#414868 bg:#282a34)\
 $fill\
 $cmd_duration\
-[](fg:#2e2f38 bg:bright-black)\
+[](fg:#282a34 bg:bright-black)\
 [](fg:bright-black bg:#fb4183)\
 [█](fg:#fb4183)\
 [ ](fg:black bg:#fb4183)\
