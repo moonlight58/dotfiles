@@ -1,0 +1,74 @@
+[window]
+opacity = 0.95
+padding.x = 10
+padding.y = 10
+decorations = "none"
+dynamic_padding = false
+
+[font]
+size = 11.0
+
+[font.normal]
+family = "Hurmit Nerd Font Mono"
+style = "Regular"
+
+[font.bold]
+family = "Hurmit Nerd Font Mono"
+style = "Bold"
+
+[font.italic]
+family = "Hurmit Nerd Font Mono"
+style = "Italic"
+
+[colors.primary]
+background = "#1c1a17"   # brun très sombre, chaud
+foreground = "#ddd0b3"   # ivoire chaud
+
+[colors.cursor]
+text = "#1c1a17"
+cursor = "#c9a96e"       # ocre doré
+
+[colors.selection]
+text = "#ddd0b3"
+background = "#3d3528"   # brun sélection
+
+[colors.normal]
+black   = "#1c1a17"
+red     = "#a05c52"      # terre cuite
+green   = "#6e8c5a"      # vert mousse
+yellow  = "#b89a4e"      # ocre
+blue    = "#5a7a8c"      # bleu ardoise
+magenta = "#8c6a7a"      # mauve rosé
+cyan    = "#5a8c7a"      # vert sauge
+white   = "#ddd0b3"      # ivoire
+
+[colors.bright]
+black   = "#3d3528"
+red     = "#c47a6e"      # terre cuite claire
+green   = "#90b878"      # vert feuille
+yellow  = "#d4b86a"      # or chaud
+blue    = "#7a9eb8"      # bleu ciel voilé
+magenta = "#b88ea0"      # mauve clair
+cyan    = "#7ab8a4"      # vert eau
+white   = "#f5edd8"      # blanc cassé chaud
+
+[cursor]
+style = "Block"
+unfocused_hollow = true
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[bell]
+animation = "EaseOutExpo"
+duration = 0
+
+[terminal.shell]
+program = "/bin/bash"
+args = ["-l"]
+
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001B\r"

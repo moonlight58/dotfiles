@@ -1,0 +1,313 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = true
+palette = 'earthy'
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$fill\
+$c\
+$cpp\
+$docker_context\
+$dotnet\
+$golang\
+$gradle\
+$java\
+$kotlin\
+$lua\
+$nim\
+$nodejs\
+$php\
+$python\
+$rlang\
+$ruby\
+$rust\
+$zig\
+$conda\
+$cmd_duration\
+$time\
+$line_break\
+$username\
+$hostname\
+$character"""
+
+[fill]
+symbol = ' '
+style = 'dimmed white'
+
+# Prompt character
+[character]
+success_symbol = "[✦](yellow_base) "
+error_symbol = "[✦](red_bright) "
+
+[username]
+style_user = "orange_dim"
+style_root = "red_bright"
+format = '[$user]($style)[@](dimmed white)'
+disabled = false
+show_always = false
+
+[hostname]
+ssh_only = false
+format = '[$hostname](white1) [·](dimmed white) '
+disabled = false
+aliases = { "hp-info-01" = "debian" }
+
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+format = '[$path]($style)[$read_only]($read_only_style) '
+style = "yellow_bright"
+truncation_symbol = "…/"
+read_only = " "
+read_only_style = "red_dim"
+
+[git_branch]
+format = "[·](dimmed white) [$symbol$branch]($style) "
+symbol = "󰘬 "
+style = "green_base"
+
+[git_status]
+format = '([$all_status$ahead_behind]($style)) '
+style = 'orange_base'
+conflicted = '~${count} '
+stashed = '*${count} '
+ahead = '⇡${count} '
+behind = '⇣${count} '
+diverged = '⇠${behind_count} ⇢${ahead_count} '
+untracked = '?${count} '
+modified = '!${count} '
+staged = '+${count} '
+renamed = '»${count} '
+deleted = '✘${count} '
+
+[cmd_duration]
+min_time = 500
+format = '[·](dimmed white) [${duration}]($style) '
+style = "orange_dim"
+disabled = false
+
+[time]
+disabled = false
+format = '[·](dimmed white) [$time]($style) '
+style = 'gray5'
+time_format = '%H:%M'
+use_12hr = false
+
+# Languages
+[c]
+format = '[·](dimmed white) [$symbol$name $version]($style) '
+style = 'blue1'
+symbol = " "
+commands = [ [ 'cc', '--version' ], [ 'gcc', '--version' ], [ 'clang', '--version' ] ]
+disabled = false
+
+[cpp]
+format = '[·](dimmed white) [$symbol$version]($style) '
+style = 'blue1'
+symbol = ''
+detect_extensions = ['cpp', 'cc', 'cxx', 'c++', 'hpp', 'hh', 'hxx', 'h++', 'tcc']
+commands = [ [ 'c++', '--version' ], [ 'g++', '--version' ], [ 'clang++', '--version' ] ]
+disabled = false
+
+[conda]
+format = '[·](dimmed white) [$symbol$environment]($style) '
+style = 'green_dim'
+symbol = " "
+disabled = false
+
+[container]
+format = '[·](dimmed white) [$symbol\[$name\]]($style) '
+style = 'red_base'
+symbol = " "
+disabled = false
+
+[docker_context]
+format = '[·](dimmed white) [$symbol$context]($style) '
+symbol = " "
+only_with_files = true
+detect_extensions = []
+detect_files = ['compose.yml', 'compose.yaml', 'docker-compose.yml', 'docker-compose.yaml', 'Dockerfile']
+detect_folders = []
+style = "cyan_base"
+disabled = false
+
+[dotnet]
+format = '[·](dimmed white) [$symbol$version]($style) '
+symbol = ".NET "
+version_format = 'v${major}.${minor}'
+heuristic = true
+detect_extensions = ['csproj', 'fsproj', 'xproj']
+detect_files = ['global.json', 'project.json', 'Directory.Build.props', 'Directory.Build.targets', 'Packages.props']
+style = "blue0"
+disabled = false
+
+[golang]
+format = '[·](dimmed white) [$symbol$version]($style) '
+symbol = " "
+version_format = 'v${major}.${minor}'
+detect_extensions = ['go']
+detect_files = ['go.mod', 'go.sum', 'go.work', 'glide.yaml', 'Gopkg.yml', 'Gopkg.lock', '.go-version']
+detect_folders = ['Godeps']
+style = "cyan_bright"
+not_capable_style = "red_dim"
+disabled = false
+
+[gradle]
+format = '[·](dimmed white) [$symbol$version]($style) '
+symbol = " "
+version_format = 'v${major}.${minor}'
+detect_extensions = ['gradle', 'gradle.kts']
+detect_folders = ['gradle']
+style = "cyan_dim"
+disabled = false
+recursive = false
+
+[java]
+format = '[·](dimmed white) [$symbol$version]($style) '
+symbol = " "
+version_format = 'v${major}.${minor}'
+detect_extensions = ['java', 'class', 'gradle', 'jar', 'cljs', 'cljc']
+style = 'orange_dim'
+disabled = false
+
+[kotlin]
+format = '[·](dimmed white) [$symbol$version]($style) '
+symbol = " "
+version_format = 'v${major}.${minor}'
+detect_extensions = ['kt', 'kts']
+style = "magenta_dim"
+disabled = false
+
+[lua]
+format = '[·](dimmed white) [$symbol$version]($style) '
+symbol = " "
+version_format = 'v${major}.${minor}'
+detect_extensions = ['lua']
+detect_files = ['.lua-version']
+detect_folders = ['lua']
+style = "blue2"
+lua_binary = 'lua'
+disabled = false
+
+[nim]
+format = '[·](dimmed white) [$symbol$version]($style) '
+symbol = " "
+version_format = 'v${major}.${minor}'
+detect_extensions = ['nim', 'nims', 'nimble']
+detect_files = ['nim.cfg']
+style = 'yellow_dim'
+disabled = false
+
+[nodejs]
+format = '[·](dimmed white) [node$symbol $version]($style) '
+symbol = " "
+detect_files = ['.node-version']
+style = "green_bright"
+disabled = false
+
+[php]
+format = '[·](dimmed white) [$symbol$version]($style) '
+symbol = " "
+version_format = 'v${major}.${minor}'
+detect_extensions = ['php']
+detect_files = ['composer.json', '.php-version']
+style = 'blue1'
+disabled = false
+
+[python]
+format = '[·](dimmed white) [$symbol$version]($style) '
+symbol = " "
+style = "yellow_base"
+disabled = false
+
+[rlang]
+format = '[·](dimmed white) [$symbol$version]($style) '
+symbol = " "
+version_format = 'v${major}.${minor}'
+detect_extensions = ['R', 'Rd', 'Rmd', 'Rproj', 'Rsx']
+detect_files = ['.Rprofile']
+detect_folders = ['.Rproj.user']
+style = 'blue0'
+disabled = false
+
+[ruby]
+format = '[·](dimmed white) [$symbol$version]($style) '
+symbol = " "
+version_format = 'v${major}.${minor}'
+detect_extensions = ['rb']
+detect_files = ['Gemfile', '.ruby-version']
+detect_variables = ['RUBY_VERSION', 'RBENV_VERSION']
+style = 'red_dim'
+disabled = false
+
+[rust]
+format = '[·](dimmed white) [$symbol$version]($style) '
+symbol = " "
+version_format = 'v${major}.${minor}'
+detect_extensions = ['rs']
+detect_files = ['Cargo.toml']
+style = 'orange_bright'
+disabled = false
+
+[zig]
+format = '[·](dimmed white) [$symbol$version]($style) '
+symbol = " "
+version_format = 'v${major}.${minor}'
+detect_extensions = ['zig']
+style = 'yellow_base'
+disabled = false
+
+[line_break]
+disabled = false
+
+# Palette
+# ------------------------------------------
+[palettes.earthy]
+
+black0 = '#1c1a17'
+black1 = '#201e1a'
+black2 = '#242018'
+
+gray0 = '#2a2520'
+gray1 = '#332e27'
+gray2 = '#3d3528'
+gray3 = '#4a4035'
+gray4 = '#574b3e'
+gray5 = '#6e6050'
+
+white0_normal = '#c4b49a'
+white0_warm   = '#cbbfa6'
+white1 = '#ddd0b3'
+white2 = '#e8ddc8'
+white3 = '#f5edd8'
+
+blue0 = '#4e6e80'
+blue1 = '#5a7a8c'
+blue2 = '#7a9eb8'
+
+cyan_base   = '#5a8c7a'
+cyan_bright = '#7ab8a4'
+cyan_dim    = '#4a7a6a'
+
+red_base   = '#a05c52'
+red_bright = '#c47a6e'
+red_dim    = '#8a4a40'
+
+orange_base   = '#b07840'
+orange_bright = '#d4a060'
+orange_dim    = '#8c5e30'
+
+yellow_base   = '#b89a4e'
+yellow_bright = '#d4b86a'
+yellow_dim    = '#9c8040'
+
+green_base   = '#6e8c5a'
+green_bright = '#90b878'
+green_dim    = '#587848'
+
+magenta_base   = '#8c6a7a'
+magenta_bright = '#b88ea0'
+magenta_dim    = '#724858'
