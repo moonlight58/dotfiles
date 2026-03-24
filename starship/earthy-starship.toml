@@ -46,8 +46,8 @@ error_symbol = "[✦](red_bright) "
 style_user = "orange_dim"
 style_root = "red_bright"
 format = '[$user]($style)[@](dimmed white)'
-disabled = false
-show_always = false
+show_always = true
+aliases = { "userdepinfo" = "moon" }
 
 [hostname]
 ssh_only = false
