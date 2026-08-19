@@ -1,8 +1,3 @@
-/* ---------------------------------------------------------------------
-   NThing-inspired theme: transparent bar, floating black circles/pills,
-   gold accent on hover, white text/icons.
-   --------------------------------------------------------------------- */
-
 @define-color bg-circle #1B1C1D;
 @define-color text-color #F5F5F0;
 @define-color muted-color rgba(245, 245, 240, 0.55);
@@ -18,13 +13,8 @@
 window#waybar {
   background: transparent;
   color: @text-color;
+  min-height: 0;
 }
-
-/* ---------------------------------------------------------------------
-   True circles: single icon, no text, fixed equal width/height so they
-   stay round regardless of the glyph inside. No horizontal padding -
-   the icon is centered by the fixed box size instead.
-   --------------------------------------------------------------------- */
 
 #custom-power,
 #custom-lock,
@@ -35,7 +25,6 @@ window#waybar {
   color: @text-color;
   border-radius: 999px;
   min-width: 32px;
-  min-height: 32px;
   padding: 0;
   margin: 4px 4px;
   transition: all 150ms ease-in-out;
@@ -79,20 +68,34 @@ window#waybar {
   margin: 0 3px;
 }
 
+#workspaces {
+  background-color: @bg-circle;
+  border-radius: 999px;
+  padding: 0 8px;
+  margin: 0 3px;
+}
+
 #workspaces button {
-  all: unset;              
-  border-radius: 10px;
+  padding: 0px;
+  margin: 10px 3px; 
   background-color: @muted-color;
-  min-width: 4px;
-  min-height: 4px;
-  padding: 0;
-  margin: 10px 2px;            
-  transition: all 150ms ease-in-out;
+  font-size: 0px;
+  border-radius: 999px;
+  
+  min-width: 8px;
+  min-height: 8px;
+  
+  box-shadow: none;
+  text-shadow: none;
+  border: none;
 }
 
 #workspaces button.active {
   background-color: @gold;
-  min-width: 19px;
+  
+  min-width: 20px;
+  min-height: 8px;
+  border-radius: 999px;
 }
 
 #workspaces button:hover {
@@ -140,7 +143,6 @@ window#waybar {
 #tray {
   background-color: @bg-circle;
   border-radius: 999px;
-  min-height: 32px;
   padding: 0 10px;
   margin: 4px 4px;
 }

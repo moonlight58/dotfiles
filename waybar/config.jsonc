@@ -1,7 +1,7 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 30,
+  "height": 0,
   "margin-top": 5,
   "margin-left": 10,
   "margin-right": 10,
@@ -12,7 +12,10 @@
   "modules-center": ["hyprland/workspaces", "custom/weather", "clock", "network", "pulseaudio", "tray"],
 
   "hyprland/workspaces": {
-    "format": "",
+    "format": "{icon}",
+    "format-icons": {
+      "default": " "
+    }
   },
 
   "tray": {
@@ -42,8 +45,6 @@
     "max-length": 40
   },
 
-  // Opens a bluetooth GUI on click - swap "blueman-manager" if you use
-  // something else (e.g. "overskride", "kcmshell6 kcm_bluetooth").
   "custom/bluetooth": {
     "tooltip": false,
     "on-click": "blueman-manager",
@@ -58,11 +59,6 @@
     "return-type": "json"
   },
 
-  // Font Awesome range (fa-wifi / fa-globe / fa-chain-broken) - matches
-  // the glyph metrics of power/lock/files/bluetooth. The old icons here
-  // were from the Material Design Icons range, which renders visibly
-  // smaller/thinner at the same font-size - that mismatch, not the
-  // hover border, was why network looked undersized next to the others.
   "network": {
     "format-wifi": "\uf1eb",
     "format-ethernet": "\uf0ac",
@@ -90,12 +86,5 @@
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
     "format": "{:%H:%M}",
     "interval": 1
-  },
-
-  // Not currently shown in the bar - add "memory" to modules-right if
-  // you want it back.
-  "memory": {
-    "interval": 30,
-    "format": "\uf538  {used:0.1f}G/{total:0.1f}G"
   }
 }
