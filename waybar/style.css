@@ -1,8 +1,22 @@
+/* ---------------------------------------------------------------------
+   NThing-inspired theme: transparent bar, floating black circles/pills,
+   gold accent on hover, white text/icons.
+
+   Every property below is a real GTK3 CSS property (see
+   docs.gtk.org/gtk3/css-properties.html). In particular: there is no
+   `width`/`height`/`max-width`/`max-height` in GTK3 CSS — only
+   `min-width`/`min-height` exist. Every size below is achieved with
+   min-* plus padding/margin, not a fixed dimension, because GTK gives
+   us no other tool.
+   --------------------------------------------------------------------- */
+
 @define-color bg-circle #1B1C1D;
 @define-color text-color #F5F5F0;
 @define-color muted-color rgba(245, 245, 240, 0.55);
 @define-color gold #D4AF37;
 @define-color divider rgba(255, 255, 255, 0.15);
+@define-color nothing-base #FDFDFD;
+@define-color nothing-accent #E2201F;
 
 * {
   font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", sans-serif;
@@ -11,20 +25,34 @@
 }
 
 window#waybar {
-  background: transparent;
   color: @text-color;
   min-height: 0;
+  background: none;
+}
+
+.modules-center {
+  font-weight: bold;
+  margin: 0px 10px;
+  margin-top: 4px;
+  background: @bg-circle;
+  border: none;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-right: 4px;
+  padding-left: 4px;
+  border-radius: 10px;
+  border-bottom: 3px solid @nothing-accent;
 }
 
 #custom-power,
 #custom-lock,
 #custom-files,
 #custom-bluetooth,
-#network {
-  background-color: @bg-circle;
+#network,
+#tray {
   color: @text-color;
-  border-radius: 999px;
   min-width: 32px;
+  min-height: 32px;
   padding: 0;
   margin: 4px 4px;
   transition: all 150ms ease-in-out;
@@ -39,119 +67,45 @@ window#waybar {
 #custom-files:hover,
 #custom-bluetooth:hover,
 #network:hover {
-  color: @gold;
-  box-shadow: 0 0 0 1.5px @gold;
-}
-
-#custom-power {
-  color: #e05c5c;
-}
-
-#custom-power:hover {
-  color: #ff7a7a;
-  box-shadow: 0 0 0 1.5px #e05c5c;
+  color: @nothing-base;
 }
 
 #custom-music,
 #custom-weather {
-  background-color: @bg-circle;
-  border-radius: 999px;
   padding: 4px 14px;
   margin: 0 3px;
   color: @text-color;
 }
 
 #workspaces {
-  background-color: @bg-circle;
-  border-radius: 999px;
-  padding: 3px 6px;
-  margin: 0 3px;
-}
-
-#workspaces {
-  background-color: @bg-circle;
-  border-radius: 999px;
   padding: 0 8px;
   margin: 0 3px;
 }
 
 #workspaces button {
-  padding: 0px;
-  margin: 10px 3px; 
   background-color: @muted-color;
-  font-size: 0px;
   border-radius: 999px;
-  
   min-width: 8px;
   min-height: 8px;
-  
-  box-shadow: none;
-  text-shadow: none;
+  padding: 0;
   border: none;
+  margin: 17px 3px;
+  transition: all 150ms ease-in-out;
+}
+
+#workspaces button label {
+  font-size: 0;
+  min-height: 0;
 }
 
 #workspaces button.active {
-  background-color: @gold;
-  
+  background-color: @nothing-base;
   min-width: 20px;
   min-height: 8px;
   border-radius: 999px;
 }
 
 #workspaces button:hover {
-  background-color: @gold;
+  background-color: @nothing-base;
 }
 
-#status {
-  background-color: @bg-circle;
-  border-radius: 999px;
-  padding: 4px 14px;
-  margin: 0px 10px;
-}
-
-#status #pulseaudio,
-#status #battery,
-#status #clock {
-  background: transparent;
-  padding: 0 8px;
-  margin: 0;
-  border-radius: 0;
-}
-
-#status #pulseaudio {
-  color: @text-color;
-  border-right: 1px solid @divider;
-}
-
-#status #battery {
-  color: #a6d189;
-  border-right: 1px solid @divider;
-}
-
-#status #battery.charging {
-  color: #a6d189;
-}
-
-#status #battery.warning:not(.charging) {
-  color: #e78284;
-}
-
-#status #clock {
-  color: @text-color;
-}
-
-#tray {
-  background-color: @bg-circle;
-  border-radius: 999px;
-  padding: 0 10px;
-  margin: 4px 4px;
-}
-
-#tray > widget {
-  padding: 0 2px;
-}
-
-#tray menu {
-  background-color: @bg-circle;
-  color: @text-color;
-}
