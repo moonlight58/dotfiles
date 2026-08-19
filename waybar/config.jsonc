@@ -1,0 +1,101 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 30,
+  "margin-top": 5,
+  "margin-left": 10,
+  "margin-right": 10,
+
+  // ---------------------------------------------------------------------
+  // Center: clock 
+  // ---------------------------------------------------------------------
+  "modules-center": ["hyprland/workspaces", "custom/weather", "clock", "network", "pulseaudio", "tray"],
+
+  "hyprland/workspaces": {
+    "format": "",
+  },
+
+  "tray": {
+    "icon-size": 13,
+    "spacing": 8
+  },
+
+  "custom/power": {
+    "tooltip": false,
+    "on-click": "wlogout &",
+    "format": "\uf011"
+  },
+
+  "custom/lock": {
+    "tooltip": false,
+    "on-click": "hyprlock",
+    "format": "\uf023"
+  },
+
+  "custom/music": {
+    "format": "\uf001  {}",
+    "escape": true,
+    "interval": 5,
+    "tooltip": false,
+    "exec": "playerctl metadata --format='{{ artist }} - {{ title }}' 2>/dev/null || echo 'Nothing playing'",
+    "on-click": "playerctl play-pause",
+    "max-length": 40
+  },
+
+  // Opens a bluetooth GUI on click - swap "blueman-manager" if you use
+  // something else (e.g. "overskride", "kcmshell6 kcm_bluetooth").
+  "custom/bluetooth": {
+    "tooltip": false,
+    "on-click": "blueman-manager",
+    "format": "\uf293"
+  },
+
+  "custom/weather": {
+    "format": "{}",
+    "tooltip": true,
+    "interval": 1800,
+    "exec": "/home/moon/.config/waybar/scripts/weather-stats/weather-stats",
+    "return-type": "json"
+  },
+
+  // Font Awesome range (fa-wifi / fa-globe / fa-chain-broken) - matches
+  // the glyph metrics of power/lock/files/bluetooth. The old icons here
+  // were from the Material Design Icons range, which renders visibly
+  // smaller/thinner at the same font-size - that mismatch, not the
+  // hover border, was why network looked undersized next to the others.
+  "network": {
+    "format-wifi": "\uf1eb",
+    "format-ethernet": "\uf0ac",
+    "format-disconnected": "\uf127",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%)",
+    "interval": 5
+  },
+
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "\uf026",
+    "format-icons": {
+      "default": ["\uf026", "\uf027", "\uf028"]
+    },
+    "on-click": "pavucontrol"
+  },
+
+  "battery": {
+    "format": "{icon} {capacity}%",
+    "format-icons": ["\uf244", "\uf243", "\uf242", "\uf241", "\uf240"]
+  },
+
+  "clock": {
+    "timezone": "Europe/Paris",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "format": "{:%H:%M}",
+    "interval": 1
+  },
+
+  // Not currently shown in the bar - add "memory" to modules-right if
+  // you want it back.
+  "memory": {
+    "interval": 30,
+    "format": "\uf538  {used:0.1f}G/{total:0.1f}G"
+  }
+}

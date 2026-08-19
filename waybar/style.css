@@ -1,0 +1,155 @@
+/* ---------------------------------------------------------------------
+   NThing-inspired theme: transparent bar, floating black circles/pills,
+   gold accent on hover, white text/icons.
+   --------------------------------------------------------------------- */
+
+@define-color bg-circle #1B1C1D;
+@define-color text-color #F5F5F0;
+@define-color muted-color rgba(245, 245, 240, 0.55);
+@define-color gold #D4AF37;
+@define-color divider rgba(255, 255, 255, 0.15);
+
+* {
+  font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", sans-serif;
+  font-size: 14px;
+  min-height: 0;
+}
+
+window#waybar {
+  background: transparent;
+  color: @text-color;
+}
+
+/* ---------------------------------------------------------------------
+   True circles: single icon, no text, fixed equal width/height so they
+   stay round regardless of the glyph inside. No horizontal padding -
+   the icon is centered by the fixed box size instead.
+   --------------------------------------------------------------------- */
+
+#custom-power,
+#custom-lock,
+#custom-files,
+#custom-bluetooth,
+#network {
+  background-color: @bg-circle;
+  color: @text-color;
+  border-radius: 999px;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 0;
+  margin: 4px 4px;
+  transition: all 150ms ease-in-out;
+}
+
+#network {
+  padding-right: 5px;
+}
+
+#custom-power:hover,
+#custom-lock:hover,
+#custom-files:hover,
+#custom-bluetooth:hover,
+#network:hover {
+  color: @gold;
+  box-shadow: 0 0 0 1.5px @gold;
+}
+
+#custom-power {
+  color: #e05c5c;
+}
+
+#custom-power:hover {
+  color: #ff7a7a;
+  box-shadow: 0 0 0 1.5px #e05c5c;
+}
+
+#custom-music,
+#custom-weather {
+  background-color: @bg-circle;
+  border-radius: 999px;
+  padding: 4px 14px;
+  margin: 0 3px;
+  color: @text-color;
+}
+
+#workspaces {
+  background-color: @bg-circle;
+  border-radius: 999px;
+  padding: 3px 6px;
+  margin: 0 3px;
+}
+
+#workspaces button {
+  all: unset;              
+  border-radius: 10px;
+  background-color: @muted-color;
+  min-width: 4px;
+  min-height: 4px;
+  padding: 0;
+  margin: 10px 2px;            
+  transition: all 150ms ease-in-out;
+}
+
+#workspaces button.active {
+  background-color: @gold;
+  min-width: 19px;
+}
+
+#workspaces button:hover {
+  background-color: @gold;
+}
+
+#status {
+  background-color: @bg-circle;
+  border-radius: 999px;
+  padding: 4px 14px;
+  margin: 0px 10px;
+}
+
+#status #pulseaudio,
+#status #battery,
+#status #clock {
+  background: transparent;
+  padding: 0 8px;
+  margin: 0;
+  border-radius: 0;
+}
+
+#status #pulseaudio {
+  color: @text-color;
+  border-right: 1px solid @divider;
+}
+
+#status #battery {
+  color: #a6d189;
+  border-right: 1px solid @divider;
+}
+
+#status #battery.charging {
+  color: #a6d189;
+}
+
+#status #battery.warning:not(.charging) {
+  color: #e78284;
+}
+
+#status #clock {
+  color: @text-color;
+}
+
+#tray {
+  background-color: @bg-circle;
+  border-radius: 999px;
+  min-height: 32px;
+  padding: 0 10px;
+  margin: 4px 4px;
+}
+
+#tray > widget {
+  padding: 0 2px;
+}
+
+#tray menu {
+  background-color: @bg-circle;
+  color: @text-color;
+}
