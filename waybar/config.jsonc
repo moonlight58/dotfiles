@@ -1,43 +1,20 @@
 {
   "layer": "top",
   "position": "top",
-  // Fixed, not auto (0). Auto-sizing is what caused the bar to
-  // balloon to 40px earlier when the workspace buttons requested
-  // extra margin — the window just grew to fit them. A fixed value
-  // caps the total budget every module has to fit inside.
   "height": 34,
   "margin-top": 5,
   "margin-left": 10,
   "margin-right": 10,
 
-  // ---------------------------------------------------------------------
-  // Center: clock
-  // ---------------------------------------------------------------------
-  "modules-center": ["hyprland/workspaces", "custom/weather", "clock", "network", "pulseaudio", "tray"],
+  "modules-center": ["hyprland/workspaces", "custom/weather", "clock", "network", "pulseaudio", "battery", "tray"],
 
   "hyprland/workspaces": {
-    // Empty format = no glyph/space content at all inside the button.
-    // "{icon}" with a literal space in format-icons still puts a text
-    // node in there; safer to have nothing than to rely on font-size:0
-    // fully suppressing it.
     "format": ""
   },
 
   "tray": {
     "icon-size": 13,
     "spacing": 8
-  },
-
-  "custom/power": {
-    "tooltip": false,
-    "on-click": "wlogout &",
-    "format": "\uf011"
-  },
-
-  "custom/lock": {
-    "tooltip": false,
-    "on-click": "hyprlock",
-    "format": "\uf023"
   },
 
   "custom/music": {

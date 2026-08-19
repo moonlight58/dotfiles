@@ -41,13 +41,18 @@ window#waybar {
   padding-right: 4px;
   padding-left: 4px;
   border-radius: 10px;
-  border-bottom: 3px solid @nothing-accent;
+
+  background-image: linear-gradient(to right, @nothing-accent, @nothing-accent);
+  background-size: calc(100% - 20px) 2px;
+  background-position: center bottom;
+  background-repeat: no-repeat;
 }
 
 #custom-power,
 #custom-lock,
 #custom-files,
 #custom-bluetooth,
+#battery,
 #network,
 #tray {
   color: @text-color;
@@ -58,7 +63,8 @@ window#waybar {
   transition: all 150ms ease-in-out;
 }
 
-#network {
+#network,
+#battery{
   padding-right: 5px;
 }
 
@@ -78,8 +84,8 @@ window#waybar {
 }
 
 #workspaces {
-  padding: 0 8px;
-  margin: 0 3px;
+  padding-left: 8px;
+  margin-left: 3px;
 }
 
 #workspaces button {
