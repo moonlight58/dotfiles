@@ -1,0 +1,98 @@
+/**
+ * Nothing OS rofi theme
+ * Matches the waybar setup: transparent canvas, floating dark pill,
+ * red accent line, gold used sparingly for the active state.
+ */
+
+* {
+    bg-color:     #1B1C1D;
+    nothing-base:  #FDFDFD;
+    nothing-accent: #E2201F;
+    nothing-muted: rgba(245, 240, 240, 0.55);
+
+    background-color:  transparent;
+    text-color:        @nothing-base;
+    font:              "JetBrainsMono Nerd Font 11";
+}
+
+window {
+    transparency: "real";
+    background-color: transparent;
+    location: center;
+    anchor: center;
+    width: 600px;
+    border-radius: 10px;
+}
+
+mainbox {
+    background-color: @bg-color;
+    gold:          #D4AF37;
+    border-radius: 10px;
+    padding: 14px;
+    children: [ inputbar, listview ];
+}
+
+inputbar {
+    background-color: rgba(0, 0, 0, 0.35);
+    border-radius: 4px;
+    padding: 10px 16px;
+    spacing: 8px;
+    children: [ prompt, entry ];
+}
+
+prompt {
+    text-color: @nothing-accent;
+    font: "Nothing Font (5x7)";
+}
+
+entry {
+    placeholder: "Search";
+    placeholder-color: @nothing-muted;
+    text-color: @nothing-base;
+    cursor: text;
+}
+
+listview {
+    background-color: transparent;
+    margin: 12px 0px 0px 0px;
+    spacing: 4px;
+    lines: 8;
+    cycle: true;
+    dynamic: true;
+    scrollbar: false;
+}
+
+element {
+    background-color: transparent;
+    text-color: @nothing-muted;
+    border-radius: 4px;
+    padding: 8px 14px;
+    orientation: horizontal;
+    spacing: 10px;
+}
+
+element-icon {
+    size: 18px;
+    vertical-align: 0.5;
+}
+
+element-text {
+    vertical-align: 0.5;
+    text-color: inherit;
+}
+
+element normal.normal {
+    text-color: @nothing-muted;
+}
+
+element selected.normal {
+    background-image: linear-gradient(to right, #e2201f88, #1b1c1d, #1b1c1d, #1b1c1d);
+    text-color: @nothing-base;
+    border-radius: 0;
+    border: 0px 0px 0px 2px;
+    border-color: @nothing-accent;
+}
+
+element alternate.normal {
+    background-color: transparent;
+}
