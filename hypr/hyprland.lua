@@ -38,7 +38,7 @@ hl.monitor({
 -- Set programs that you use
 local terminal    = "kitty"
 local fileManager = "dolphin"
-local menu = "rofi -show run"
+local menu = "rofi -show drun -theme ~/.config/rofi/nothing.rasi"
 
 
 -------------------
@@ -102,10 +102,10 @@ hl.config({
         gaps_in  = 5,
         gaps_out = 10,
 
-        border_size = 1,
+        border_size = 3,
 
         col = {
-            active_border   = { colors = {"rgba(fdfdfdee)", "rgba(ffdf7dee)"}, angle = 45 },
+            active_border   = { colors = {"rgba(e2201fee)", "rgba(1b1c1dee)", "rgba(1b1c1dee)", "rgba(e2201fee)"}, angle = 45 },
             inactive_border = "rgba(595959aa)",
         },
 
@@ -127,7 +127,7 @@ hl.config({
         inactive_opacity = 1.0,
 
         shadow = {
-            enabled      = true,
+            enabled      = false,
             range        = 4,
             render_power = 3,
             color        = 0xee1a1a1a,
@@ -284,6 +284,8 @@ hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("hyprshot -m region --clipboa
 -- Color picker using hyprpicker
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("hyprpicker -a"))
 
+-- Lock Screen with Hyprlock
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 
 
 -- Move focus with mainMod + arrow keys
@@ -293,12 +295,28 @@ hl.bind(mainMod .. " + up",    hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + down",  hl.dsp.focus({ direction = "down" }))
 
 -- Switch workspaces with mainMod + [0-9]
+hl.bind(mainMod .. " + ampersand",          hl.dsp.focus({ workspace = 1 }))
+hl.bind(mainMod .. " + eacute",             hl.dsp.focus({ workspace = 2 }))
+hl.bind(mainMod .. " + quotedbl",           hl.dsp.focus({ workspace = 3 }))
+hl.bind(mainMod .. " + apostrophe",         hl.dsp.focus({ workspace = 4 }))
+hl.bind(mainMod .. " + parenleft",          hl.dsp.focus({ workspace = 5 }))
+hl.bind(mainMod .. " + minus",              hl.dsp.focus({ workspace = 6 }))
+hl.bind(mainMod .. " + egrave",             hl.dsp.focus({ workspace = 7 }))
+hl.bind(mainMod .. " + underscore",         hl.dsp.focus({ workspace = 8 }))
+hl.bind(mainMod .. " + ccedilla",           hl.dsp.focus({ workspace = 9 }))
+hl.bind(mainMod .. " + agrave",             hl.dsp.focus({ workspace = 10 }))
+
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]
-for i = 1, 10 do
-    local key = i % 10 -- 10 maps to key 0
-    hl.bind(mainMod .. " + " .. key,             hl.dsp.focus({ workspace = i}))
-    hl.bind(mainMod .. " + SHIFT + " .. key,     hl.dsp.window.move({ workspace = i }))
-end
+hl.bind(mainMod .. " + SHIFT + ampersand",     hl.dsp.window.move({ workspace = 1 }))
+hl.bind(mainMod .. " + SHIFT + eacute",     hl.dsp.window.move({ workspace = 2 }))
+hl.bind(mainMod .. " + SHIFT + quotedbl",     hl.dsp.window.move({ workspace = 3 }))
+hl.bind(mainMod .. " + SHIFT + apostrophe",     hl.dsp.window.move({ workspace = 4 }))
+hl.bind(mainMod .. " + SHIFT + parenleft",     hl.dsp.window.move({ workspace = 5 }))
+hl.bind(mainMod .. " + SHIFT + minus",     hl.dsp.window.move({ workspace = 6 }))
+hl.bind(mainMod .. " + SHIFT + egrave",     hl.dsp.window.move({ workspace = 7 }))
+hl.bind(mainMod .. " + SHIFT + underscore",     hl.dsp.window.move({ workspace = 8 }))
+hl.bind(mainMod .. " + SHIFT + ccedilla",     hl.dsp.window.move({ workspace = 9 }))
+hl.bind(mainMod .. " + SHIFT + agrave",     hl.dsp.window.move({ workspace = 10 }))
 
 -- Scroll through existing workspaces with mainMod + scroll
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
