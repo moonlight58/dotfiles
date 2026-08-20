@@ -1,22 +1,8 @@
-/* ---------------------------------------------------------------------
-   NThing-inspired theme: transparent bar, floating black circles/pills,
-   gold accent on hover, white text/icons.
-
-   Every property below is a real GTK3 CSS property (see
-   docs.gtk.org/gtk3/css-properties.html). In particular: there is no
-   `width`/`height`/`max-width`/`max-height` in GTK3 CSS — only
-   `min-width`/`min-height` exist. Every size below is achieved with
-   min-* plus padding/margin, not a fixed dimension, because GTK gives
-   us no other tool.
-   --------------------------------------------------------------------- */
-
 @define-color bg-circle #1B1C1D;
-@define-color text-color #F5F5F0;
-@define-color muted-color rgba(245, 245, 240, 0.55);
 @define-color gold #D4AF37;
-@define-color divider rgba(255, 255, 255, 0.15);
 @define-color nothing-base #FDFDFD;
 @define-color nothing-accent #E2201F;
+@define-color nothing-muted rgba(245, 240, 240, 0.55);
 
 * {
   font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", sans-serif;
@@ -25,7 +11,6 @@
 }
 
 window#waybar {
-  color: @text-color;
   min-height: 0;
   background: none;
 }
@@ -41,46 +26,46 @@ window#waybar {
   padding-right: 4px;
   padding-left: 4px;
   border-radius: 10px;
-
+  
   background-image: linear-gradient(to right, @nothing-accent, @nothing-accent);
-  background-size: calc(100% - 20px) 2px;
+  background-size: calc(100% - 18px) 2px;
   background-position: center bottom;
   background-repeat: no-repeat;
 }
 
-#custom-power,
-#custom-lock,
-#custom-files,
-#custom-bluetooth,
+#clock {
+  font-family: "Nothing Font (5x7)";
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 65px 0 35px;
+}
+
 #battery,
-#network,
-#tray {
-  color: @text-color;
+#pulseaudio,
+#network {
+  color: @nothing-muted;
   min-width: 32px;
   min-height: 32px;
   padding: 0;
-  margin: 4px 4px;
+  margin: 0;
   transition: all 150ms ease-in-out;
 }
 
-#network,
-#battery{
-  padding-right: 5px;
+#battery {
+  padding-right: 10px;
 }
 
-#custom-power:hover,
-#custom-lock:hover,
-#custom-files:hover,
-#custom-bluetooth:hover,
+#pulseaudio {
+  padding-left: 5px;
+}
+
 #network:hover {
-  color: @nothing-base;
+  color: @nothing-accent;
 }
 
-#custom-music,
 #custom-weather {
-  padding: 4px 14px;
-  margin: 0 3px;
-  color: @text-color;
+  padding: 4px 24px 4px 14px;
+  color: @nothing-muted;
 }
 
 #workspaces {
@@ -89,7 +74,7 @@ window#waybar {
 }
 
 #workspaces button {
-  background-color: @muted-color;
+  background-color: @nothing-muted;
   border-radius: 999px;
   min-width: 8px;
   min-height: 8px;
@@ -110,8 +95,3 @@ window#waybar {
   min-height: 8px;
   border-radius: 999px;
 }
-
-#workspaces button:hover {
-  background-color: @nothing-base;
-}
-

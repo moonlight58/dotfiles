@@ -6,7 +6,24 @@
   "margin-left": 10,
   "margin-right": 10,
 
-  "modules-center": ["hyprland/workspaces", "custom/weather", "clock", "network", "pulseaudio", "battery", "tray"],
+  "modules-center": ["group/left-pill", "clock", "group/right-pill"],
+
+  "group/left-pill": {
+    "orientation": "horizontal",
+    "modules": [
+      "hyprland/workspaces",
+      "custom/weather"
+    ]
+  },
+
+  "group/right-pill": {
+    "orientation": "horizontal",
+    "modules": [
+      "network",
+      "pulseaudio",
+      "battery"
+    ]
+  },
 
   "hyprland/workspaces": {
     "format": ""
@@ -15,22 +32,6 @@
   "tray": {
     "icon-size": 13,
     "spacing": 8
-  },
-
-  "custom/music": {
-    "format": "\uf001  {}",
-    "escape": true,
-    "interval": 5,
-    "tooltip": false,
-    "exec": "playerctl metadata --format='{{ artist }} - {{ title }}' 2>/dev/null || echo 'Nothing playing'",
-    "on-click": "playerctl play-pause",
-    "max-length": 40
-  },
-
-  "custom/bluetooth": {
-    "tooltip": false,
-    "on-click": "blueman-manager",
-    "format": "\uf293"
   },
 
   "custom/weather": {
@@ -50,7 +51,7 @@
   },
 
   "pulseaudio": {
-    "format": "{icon} {volume}%",
+    "format": "{icon}",
     "format-muted": "\uf026",
     "format-icons": {
       "default": ["\uf026", "\uf027", "\uf028"]
@@ -59,7 +60,7 @@
   },
 
   "battery": {
-    "format": "{icon} {capacity}%",
+    "format": "{icon}",
     "format-icons": ["\uf244", "\uf243", "\uf242", "\uf241", "\uf240"]
   },
 
