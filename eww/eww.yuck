@@ -1,0 +1,18 @@
+;; Time vars
+(defpoll HOUR :interval "5s" `date +\"%I\"`)
+(defpoll MIN :interval "5s" `date +\"%M\"`)
+
+(defwidget clock []
+  (box :orientation "h"
+    (label :class "time_hour" :text HOUR)
+    (label :class "time_divider" :text ":")
+    (label :class "time_min" :text MIN)
+  )
+)
+
+(defwindow clock :stacking "bg" :monitor 0 :focusable "false"
+  :geometry (geometry :x "60%" 
+                      :y "0%" 
+                      :width "700px"
+                      :height "300px")
+    (clock))

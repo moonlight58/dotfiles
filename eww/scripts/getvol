@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Prints current default sink volume as an integer percentage (0-100+).
+# Requires PipeWire + WirePlumber (wpctl).
+#
+# IMPORTANT: this must always print a valid integer. If wpctl fails or
+# returns nothing (e.g. briefly at startup before the sink is ready), an
+# empty/non-numeric result will crash the eww widget bound to this value -
+# and since it lives inside the main bar widget tree, that can silently
+# take down the whole bar window, not just the slider.
+
+raw=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null)
+vol=$(echo "$raw" | awk '{print $2}')
+
+if [[ -z "$vol" ]]; then
+  echo 0
+else
+  awk -v v="$vol" 'BEGIN { printf "%d\n", (v * 100) }'
+fi

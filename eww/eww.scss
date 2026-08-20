@@ -1,0 +1,34 @@
+// ---------------------------------------------------------------------------
+// NThing-inspired theme: transparent bar, floating black pills/circles,
+// gold accent on hover/active, white text/icons.
+// ---------------------------------------------------------------------------
+
+$bg-circle: #1B1C1D;
+$nothing-base: #F5F5F0;
+$nothing-muted: rgba(245, 245, 240, 0.55);
+$nothing-accent: #E2201F;
+
+* {
+  all: unset;
+}
+
+.clock {
+  font-family: "Nothing Font (5x7)";
+  font-size: 200px;
+}
+
+.time_hour,
+.time_divider,
+.time_min {
+  padding: 0;
+  margin: 0;
+}
+
+.time_hour {
+  color: $nothing-accent;
+}
+
+.time_divider,
+.time_min {
+  color: $nothing-base;
+}
