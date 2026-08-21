@@ -1,0 +1,106 @@
+# =============================================================
+#  Starship - Nothing OS theme (flat, black/white/red, minimal)
+#  Tokens: base #fdfdfd | accent #e2201f | muted #8f8b8b
+#
+#  Render:
+#  ~/Documents
+#  > 
+# =============================================================
+
+add_newline = true
+
+# Flat two-line prompt - no segments, no pills, no powerline.
+# Line 1: path (base) + git branch/status (accent)
+# Line 2: bare ">" prompt symbol in accent
+format = """
+[$directory]($style)[$git_branch]($style)[$git_status](bold red)
+[$character]($style)"""
+
+continuation_prompt = "[>](bold #e2201f) "
+
+# -------------------------------------------------------------
+#  Prompt symbol
+# -------------------------------------------------------------
+[character]
+success_symbol = "[>](bold #e2201f)"
+error_symbol   = "[>](bold #e2201f)"
+vimcmd_symbol  = "[<](bold #e2201f)"
+
+# -------------------------------------------------------------
+#  Directory - flat white/base, no background pill
+# -------------------------------------------------------------
+[directory]
+style             = "bold #fdfdfd"
+format            = "[$path]($style)[$read_only]($read_only_style)"
+read_only         = " ×"
+read_only_style   = "#e2201f"
+truncation_length = 4
+truncate_to_repo  = false
+home_symbol       = "~"
+
+# -------------------------------------------------------------
+#  Git
+# -------------------------------------------------------------
+[git_branch]
+format = " [\\(](#8f8b8b)[$branch](#e2201f)[\\)](#8f8b8b)"
+style  = "#e2201f"
+
+[git_status]
+format     = "[$all_status$ahead_behind]($style)"
+style      = "bold #e2201f"
+conflicted = "!"
+ahead      = "^${count}"
+behind     = "v${count}"
+diverged   = "<>"
+modified   = "~"
+untracked  = "?"
+staged     = "+"
+deleted    = "-"
+
+# -------------------------------------------------------------
+#  Language/runtime modules - muted, minimal, no icons/pills
+# -------------------------------------------------------------
+[nodejs]
+disabled = false
+format   = " [node $version](#8f8b8b)"
+
+[python]
+disabled = false
+format   = " [py $version](#8f8b8b)"
+
+[rust]
+disabled = false
+format   = " [rs $version](#8f8b8b)"
+
+[cmd_duration]
+min_time = 2000
+format   = " [${duration}](#8f8b8b)"
+
+[status]
+disabled = false
+format   = " [x $status](bold #e2201f)"
+
+[jobs]
+disabled = false
+format   = " [job:$number](#8f8b8b)"
+
+[time]
+disabled    = true
+format      = " [$time](#8f8b8b)"
+time_format = "%H:%M"
+
+# -------------------------------------------------------------
+#  Disabled - keep it minimal
+# -------------------------------------------------------------
+[package]
+disabled = true
+[aws]
+disabled = true
+[gcloud]
+disabled = true
+[azure]
+disabled = true
+[terraform]
+disabled = true
+[kubernetes]
+disabled = true
