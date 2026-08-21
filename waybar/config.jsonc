@@ -43,16 +43,16 @@
   },
 
   "network": {
-    "format-wifi": "\uf1eb",
-    "format-ethernet": "\uf0ac",
-    "format-disconnected": "\uf127",
+    "format-wifi": "",
+    "format-ethernet": "󰛳",
+    "format-disconnected": "",
     "tooltip-format-wifi": "{essid} ({signalStrength}%)",
     "interval": 5
   },
 
   "pulseaudio": {
-    "format": "{icon}",
-    "format-muted": "\uf026",
+    "format": "{icon} {volume}",
+    "format-muted": "",
     "format-icons": {
       "default": ["\uf026", "\uf027", "\uf028"]
     },
@@ -61,7 +61,10 @@
 
   "battery": {
     "format": "{icon}",
-    "format-icons": ["\uf244", "\uf243", "\uf242", "\uf241", "\uf240"]
+    "format-icons": {
+      "default": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+      "charging": ["󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"]
+    }
   },
 
   "clock": {

@@ -39,6 +39,7 @@ hl.monitor({
 local terminal    = "kitty"
 local fileManager = "dolphin"
 local menu = "rofi -show drun -theme ~/.config/rofi/nothing.rasi"
+local music = "deezer-enhanced"
 
 
 -------------------
@@ -59,6 +60,8 @@ local menu = "rofi -show drun -theme ~/.config/rofi/nothing.rasi"
 hl.on("hyprland.start", function ()
   hl.exec_cmd("waybar & hyprpaper")
   hl.exec_cmd("eww open clock")
+  hl.exec_cmd(music, { workspace = "10 silent" })
+  hl.exec_cmd("eww open plasmusic-window")
   hl.exec_cmd("systemctl --user start hyprpolkitagent")
   hl.exec_cmd("systemctl --user start xdg-desktop-portal-hyprland")
 end)
