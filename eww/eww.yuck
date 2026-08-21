@@ -1,3 +1,6 @@
+;; Import widgets
+(include "./plasmusic.yuck")
+
 ;; Time vars
 (defpoll HOUR :interval "5s" `date +\"%I\"`)
 (defpoll MIN :interval "5s" `date +\"%M\"`)

@@ -1,0 +1,67 @@
+;; ============================================================================
+;; PlasMusic - Nothing OS themed now-playing widget (migrated from the
+;; plasmusic-toolbar KDE Plasma applet's "Full" view).
+;;
+;; Requires: playerctl, jq, curl
+;; Data source: ~/.config/eww/scripts/plasmusic-status (chmod +x it)
+;; Place a fallback image at ~/.config/eww/images/plasmusic-placeholder.png
+;; ============================================================================
+
+(deflisten plasmusic_json :initial "{\"active\":false,\"status\":\"Stopped\",\"title\":\"\",\"subtitle\":\"\",\"art\":\"\",\"art_style\":\"\",\"progress\":0,\"progress_px\":0,\"progress_style\":\"min-width: 0px;\",\"time_label\":\"0:00 / 0:00\",\"player\":\"\"}"
+  "~/.config/eww/scripts/plasmusic-status")
+
+(defwidget plasmusic []
+  (box :class "plasmusic-card"
+       :orientation "v"
+       :space-evenly false
+       :visible {jq(plasmusic_json, ".active")}
+    (overlay
+      (box :class "plasmusic-art"
+           :style {jq(plasmusic_json, ".art_style", "r")})
+
+      (box :class "plasmusic-gradient-h" :halign "fill" :valign "fill")
+      (box :class "plasmusic-gradient-bottom" :halign "fill" :valign "fill")
+
+      (box :class "plasmusic-content"
+           :orientation "v"
+           :space-evenly false
+           :valign "end"
+           :halign "start"
+
+        (label :class "plasmusic-title"
+               :halign "start"
+               :limit-width 28
+               :truncate true
+               :text {jq(plasmusic_json, ".title", "r")})
+
+        (label :class "plasmusic-artist"
+               :halign "start"
+               :limit-width 34
+               :truncate true
+               :text {jq(plasmusic_json, ".subtitle", "r")})
+
+        (box :class "plasmusic-progress-row" :orientation "h" :space-evenly false :spacing 4
+          (box :class "plasmusic-track" :valign "center"
+            (box :class "plasmusic-fill"
+                 :halign "start"
+                 :style {jq(plasmusic_json, ".progress_style", "r")}))
+          (label :class "plasmusic-time"
+                 :text {jq(plasmusic_json, ".time_label", "r")}))
+
+        (box :class "plasmusic-controls-row" :orientation "h" :space-evenly false :spacing 8 :halign "start"
+          (button :class "plasmusic-btn" :onclick "playerctl previous" "󰒫")
+          (button :class "plasmusic-btn plasmusic-btn-primary"
+                  :onclick "playerctl play-pause"
+                  {(jq(plasmusic_json, ".status", "r")) == "Playing" ? "" : ""})
+          (button :class "plasmusic-btn" :onclick "playerctl next" "󰒬"))))))
+
+(defwindow plasmusic-window
+  :stacking "bg"
+  :monitor 0
+  :focusable "false"
+  :geometry (geometry :x "20%"
+                       :y "20px"
+                       :width "360px"
+                       :height "180px"
+                       :anchor "bottom left")
+  (plasmusic))

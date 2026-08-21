@@ -58,6 +58,7 @@ local menu = "rofi -show drun -theme ~/.config/rofi/nothing.rasi"
 
 hl.on("hyprland.start", function ()
   hl.exec_cmd("waybar & hyprpaper")
+  hl.exec_cmd("eww open clock")
   hl.exec_cmd("systemctl --user start hyprpolkitagent")
   hl.exec_cmd("systemctl --user start xdg-desktop-portal-hyprland")
 end)
@@ -135,9 +136,9 @@ hl.config({
 
         blur = {
             enabled   = true,
-            size      = 3,
-            passes    = 1,
-            vibrancy  = 0.1696,
+            size      = 8,
+            passes    = 3,
+            ignore_opacity = true,
         },
     },
 

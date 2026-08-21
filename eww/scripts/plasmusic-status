@@ -1,0 +1,164 @@
+#!/usr/bin/env bash
+# Streams the current MPRIS player state as one JSON line per update, for
+# eww's `deflisten`. Requires: playerctl, jq, curl.
+#
+# IMPORTANT: like getvol, this must never emit invalid JSON - deflisten will
+# just stop updating (rather than crash the bar) if it does, but a bad line
+# can still leave the widget stuck on stale data, so every field always gets
+# a safe default.
+
+set -u
+
+INTERVAL="${PLASMUSIC_INTERVAL:-1}"
+TRACK_WIDTH_PX="${PLASMUSIC_TRACK_WIDTH:-220}"
+CACHE_ART="/tmp/eww-plasmusic-art"
+FALLBACK_ART="$HOME/.config/eww/images/plasmusic-placeholder.png"
+PREV_URL_FILE="${CACHE_ART}.url"
+CROPPED_ART="${CACHE_ART}.cover.jpg"
+PREV_SRC_FILE="${CACHE_ART}.src"
+
+fmt_time() {
+  # $1 = microseconds -> "m:ss"
+  local us="${1:-0}"
+  [[ "$us" =~ ^[0-9]+$ ]] || us=0
+  local total_s=$((us / 1000000))
+  printf "%d:%02d" "$((total_s / 60))" "$((total_s % 60))"
+}
+
+emit() {
+  local active="$1" status="$2" title="$3" artist="$4" album="$5" art="$6" \
+        position_us="$7" length_us="$8" player="$9"
+
+  [[ "$position_us" =~ ^[0-9]+$ ]] || position_us=0
+  [[ "$length_us" =~ ^[0-9]+$ ]] || length_us=0
+
+  local progress=0
+  if [[ "$length_us" -gt 0 ]]; then
+    progress=$(awk -v p="$position_us" -v l="$length_us" 'BEGIN{printf "%d", (p/l)*100}')
+  fi
+  local progress_px
+  progress_px=$(awk -v pct="$progress" -v w="$TRACK_WIDTH_PX" 'BEGIN{printf "%d", (pct/100)*w}')
+
+  # Build the "artist — album" subtitle here rather than in yuck, so the
+  # widget file only ever needs a single flat string field.
+  local subtitle="$artist"
+  if [[ -n "$album" && "$album" != "$title" ]]; then
+    if [[ -n "$subtitle" ]]; then
+      subtitle="${subtitle} — ${album}"
+    else
+      subtitle="$album"
+    fi
+  fi
+
+  local art_style="background-image: url('${art}');"
+
+  # Precompute composite strings here too, so the yuck side never needs to
+  # nest a quoted jq() call inside another string interpolation - eww's
+  # simplexpr parser (0.6.x) doesn't like that.
+  local progress_style="min-width: ${progress_px}px;"
+  local time_label="$(fmt_time "$position_us") / $(fmt_time "$length_us")"
+
+  jq -nc \
+    --argjson active "$active" \
+    --arg status "$status" \
+    --arg title "$title" \
+    --arg subtitle "$subtitle" \
+    --arg art "$art" \
+    --arg art_style "$art_style"\
+    --argjson progress "$progress" \
+    --argjson progress_px "$progress_px" \
+    --arg progress_style "$progress_style" \
+    --arg time_label "$time_label" \
+    --arg player "$player" \
+    '{active:$active,status:$status,title:$title,subtitle:$subtitle,art:$art,art_style:$art_style,
+      progress:$progress,progress_px:$progress_px,progress_style:$progress_style,
+      time_label:$time_label,player:$player}'
+}
+
+crop_to_cover() {
+  local src="$1" key="$2"
+  [[ -z "$src" || ! -f "$src" ]] && { echo "$src"; return; }
+
+  local prev_key=""
+  [[ -f "$PREV_SRC_FILE" ]] && prev_key="$(cat "$PREV_SRC_FILE" 2>/dev/null)"
+
+  if [[ "$prev_key" != "$key" || ! -f "$CROPPED_ART" ]]; then
+    if command -v magick >/dev/null 2>&1 && \
+       magick "$src" -resize 360x180^ -gravity center -extent 360x180 "$CROPPED_ART" 2>/dev/null; then
+      echo "$key" > "$PREV_SRC_FILE"
+    else
+      echo "$src"
+      return
+    fi
+  fi
+  echo "$CROPPED_ART"
+}
+
+resolve_art() {
+  local art_url="$1"
+  [[ -z "$art_url" ]] && { echo "$FALLBACK_ART"; return; }
+
+  if [[ "$art_url" == file://* ]]; then
+    crop_to_cover "${art_url#file://}" "$art_url"
+    return
+  fi
+
+  if [[ "$art_url" == http* ]]; then
+    local ext="${art_url##*.}"
+    [[ "$ext" =~ ^[a-zA-Z0-9]{2,4}$ ]] || ext="jpg"
+    local dest="${CACHE_ART}.${ext}"
+    local prev_url=""
+    [[ -f "$PREV_URL_FILE" ]] && prev_url="$(cat "$PREV_URL_FILE" 2>/dev/null)"
+
+    if [[ "$prev_url" != "$art_url" || ! -f "$dest" ]]; then
+      if command -v curl >/dev/null 2>&1 && curl -fsSL --max-time 5 "$art_url" -o "$dest" 2>/dev/null; then
+        echo "$art_url" > "$PREV_URL_FILE"
+      fi
+    fi
+
+    [[ -f "$dest" ]] && { crop_to_cover "$dest" "$art_url"; return; }
+  fi
+
+  echo "$FALLBACK_ART"
+}
+
+if ! command -v playerctl >/dev/null 2>&1 || ! command -v jq >/dev/null 2>&1; then
+  emit false "Stopped" "" "" "" "$FALLBACK_ART" 0 0 ""
+  exit 0
+fi
+
+while true; do
+  mapfile -t players < <(playerctl -l 2>/dev/null)
+
+  player=""
+  for p in "${players[@]:-}"; do
+    [[ -z "$p" ]] && continue
+    st="$(playerctl -p "$p" status 2>/dev/null)"
+    if [[ "$st" == "Playing" ]]; then
+      player="$p"
+      break
+    fi
+  done
+  if [[ -z "$player" && "${#players[@]}" -gt 0 ]]; then
+    player="${players[0]}"
+  fi
+
+  if [[ -z "$player" ]]; then
+    emit false "Stopped" "" "" "" "$FALLBACK_ART" 0 0 ""
+  else
+    status="$(playerctl -p "$player" status 2>/dev/null)"
+    title="$(playerctl -p "$player" metadata title 2>/dev/null)"
+    artist="$(playerctl -p "$player" metadata artist 2>/dev/null)"
+    album="$(playerctl -p "$player" metadata album 2>/dev/null)"
+    art_url="$(playerctl -p "$player" metadata mpris:artUrl 2>/dev/null)"
+    length_us="$(playerctl -p "$player" metadata mpris:length 2>/dev/null)"
+    position_s="$(playerctl -p "$player" position 2>/dev/null)"
+    position_us=$(awk -v s="${position_s:-0}" 'BEGIN{printf "%d", s*1000000}')
+    art="$(resolve_art "$art_url")"
+
+    emit true "${status:-Stopped}" "${title:-}" "${artist:-}" "${album:-}" \
+      "$art" "$position_us" "${length_us:-0}" "$player"
+  fi
+
+  sleep "$INTERVAL"
+done
