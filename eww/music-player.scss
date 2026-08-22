@@ -1,0 +1,91 @@
+// ---------------------------------------------------------------------------
+// Music player widget styles.
+// Append this into eww.scss, or @import it if your setup supports partials.
+//
+// NOTE: eww's SCSS compiles down to GTK's CSS subset, not full browser CSS.
+// A few things from the HTML mockup don't have a direct equivalent here:
+//   - text-overflow/ellipsis  -> handled via the `label`'s :limit-width and
+//     :truncate properties in music-player.yuck, not CSS.
+//   - flex: 1 / min-width: 0  -> use :hexpand on the eww widget instead.
+//   - element::before/::after pseudo-elements for the vinyl grooves -> GTK
+//     CSS doesn't support generated content, so the fallback art placeholder
+//     below is a plain radial-gradient circle with a center dot child box
+//     instead of the layered ::before/::after trick.
+// ---------------------------------------------------------------------------
+
+$player-bg: #0a0a0a;
+$player-glow: rgba(226, 32, 31, 0.53);
+$text-primary: $nothing-base;
+$text-secondary: $nothing-muted;
+$accent-red: #d13b2e;
+$dot-idle: #3a3a3a;
+$dot-active: $nothing-base;
+$btn-bg: $nothing-base;
+$btn-icon: #0a0a0a;
+
+.player {
+  padding: 18px 22px;
+  border-radius: 22px;
+  background-color: $player-bg;
+  background-image: radial-gradient(150% 200% at 80% 10%, transparent 0%, $player-glow 60%);
+}
+
+.now-playing {
+  margin-bottom: 14px;
+}
+
+.art {
+  min-width: 56px;
+  min-height: 56px;
+  border-radius: 10px;
+  background-image: radial-gradient(circle at 35% 35%, #e8e8e8 0%, #cfcfcf 40%, #a8a8a8 70%, #8a8a8a 100%);
+}
+
+.art-image {
+  border-radius: 10px;
+}
+
+.track-title {
+  color: $text-primary;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.track-artist {
+  color: $text-secondary;
+  font-size: 13px;
+}
+
+.transport button {
+  min-width: 40px;
+  min-height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  background-color: transparent;
+}
+
+.transport button.play-pause {
+  background-color: $btn-bg;
+}
+
+.time {
+  font-family: "Nothing Font (5x7)";
+  font-size: 14px;
+  color: $text-primary;
+  min-width: 34px;
+}
+
+.scrubber {
+  min-height: 20px;
+}
+
+.scrubber .dot {
+  min-width: 2px;
+  border-radius: 2px;
+  background-color: $dot-idle;
+  margin: 0 2px;
+}
+
+.scrubber .dot.played {
+  background-color: $dot-active;
+}

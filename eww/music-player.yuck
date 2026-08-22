@@ -1,0 +1,71 @@
+;; Music player widget - port of the Nothing-OS styled mockup.
+;; Include this from your main eww.yuck with:
+;;   (include "./music-player.yuck")
+
+(defpoll music-player-data
+  :interval "1s"
+  :initial "{\"active\": false, \"status\": \"Stopped\", \"title\": \"\", \"artist\": \"\", \"art\": \"\", \"elapsed\": \"0:00\", \"duration\": \"0:00\", \"dots\": []}"
+  "/home/moon/.config/eww/scripts/music-player")
+
+(defwidget music-player []
+  (box :class "player"
+       :orientation "v"
+       :space-evenly false
+       :visible {music-player-data.active}
+
+    (box :class "now-playing"
+         :orientation "h"
+         :space-evenly false
+         :spacing 14
+
+      (box :class "art"
+        (image :class "art-image"
+               :path {music-player-data.art != "" ? music-player-data.art : "/home/moon/.config/eww/assets/album-placeholder.png"}
+               :image-width 56
+               :image-height 56))
+
+      (box :class "meta" :orientation "v" :space-evenly false :hexpand true :valign "center"
+        (label :class "track-title"
+               :text {music-player-data.title}
+               :halign "start"
+               :limit-width 34
+               :truncate true)
+        (label :class "track-artist"
+               :text {music-player-data.artist}
+               :halign "start"
+               :limit-width 40
+               :truncate true))
+
+      (box :class "transport" :orientation "h" :space-evenly false :spacing 8 :valign "center"
+        (button :class "prev" :onclick "playerctl previous"
+          (image :path "/home/moon/.config/eww/assets/icons/prev.svg" :image-width 18 :image-height 18))
+        (button :class "play-pause" :onclick "playerctl play-pause"
+          (image :path {music-player-data.status == "Playing" ? "/home/moon/.config/eww/assets/icons/pause.svg" : "/home/moon/.config/eww/assets/icons/play.svg"}
+                 :image-width 16 :image-height 16))
+        (button :class "next" :onclick "playerctl next"
+          (image :path "/home/moon/.config/eww/assets/icons/next.svg" :image-width 18 :image-height 18))))
+
+    (box :class "scrub-row" :orientation "h" :space-evenly false :spacing 10
+
+      (label :class "time elapsed" :text {music-player-data.elapsed})
+
+      (box :class "scrubber" :orientation "h" :space-evenly true :hexpand true :valign "end"
+        (for dot in {music-player-data.dots}
+          (box :class {dot.played ? "dot played" : "dot"}
+               :valign "end"
+               :width 3
+               :height {dot.h})))
+
+      (label :class "time duration" :text {music-player-data.duration}))))
+
+(defwindow music-player
+  :monitor 0
+  :stacking "bg"
+  :exclusive false
+  :focusable "false"
+  :geometry (geometry :x "2%"
+                       :y "1%"
+                       :width "460px"
+                       :height "110px"
+                       :anchor "top left")
+  (music-player))

@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+# Polls the active MPRIS player and emits a single-line JSON blob for eww.
+# Requires: playerctl, jq, curl (for remote album art), coreutils, awk.
+#
+# IMPORTANT: like getvol, this must always print valid JSON. eww's defpoll
+# re-runs this on a timer and feeds the output straight into the widget -
+# a malformed/empty line will break the music-player widget (and since it
+# can live in the same window tree as other bar elements, a crash can take
+# more than just this widget down). Every exit path below prints a full
+# JSON object.
+
+set -uo pipefail
+
+ART_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/eww-music-art"
+mkdir -p "$ART_CACHE_DIR" 2>/dev/null
+
+DOTS=40
+
+emit_inactive() {
+  jq -n '{
+    active: false, status: "Stopped",
+    title: "", artist: "", art: "",
+    elapsed: "0:00", duration: "0:00",
+    dots: []
+  }'
+}
+
+if ! command -v playerctl >/dev/null 2>&1 || ! command -v jq >/dev/null 2>&1; then
+  emit_inactive
+  exit 0
+fi
+
+status=$(playerctl status 2>/dev/null)
+if [[ -z "$status" ]]; then
+  emit_inactive
+  exit 0
+fi
+
+title=$(playerctl metadata title 2>/dev/null)
+artist=$(playerctl metadata artist 2>/dev/null)
+album=$(playerctl metadata album 2>/dev/null)
+art_url=$(playerctl metadata mpris:artUrl 2>/dev/null)
+position_s=$(playerctl position 2>/dev/null)
+length_us=$(playerctl metadata mpris:length 2>/dev/null)
+
+[[ -z "$position_s" ]] && position_s=0
+[[ -z "$length_us" || ! "$length_us" =~ ^[0-9]+$ ]] && length_us=0
+
+fmt_time() {
+  local total_s=${1%.*}
+  [[ -z "$total_s" || ! "$total_s" =~ ^[0-9]+$ ]] && total_s=0
+  printf "%d:%02d" $((total_s / 60)) $((total_s % 60))
+}
+
+length_s=$(( length_us / 1000000 ))
+elapsed=$(fmt_time "$position_s")
+duration=$(fmt_time "$length_s")
+
+# Resolve album art to a local path (eww's image widget needs one).
+art_path=""
+if [[ "$art_url" == file://* ]]; then
+  candidate="${art_url#file://}"
+  [[ -f "$candidate" ]] && art_path="$candidate"
+elif [[ "$art_url" == http://* || "$art_url" == https://* ]]; then
+  hash=$(printf '%s' "$art_url" | md5sum | cut -d' ' -f1)
+  cached="$ART_CACHE_DIR/$hash"
+  if [[ ! -s "$cached" ]]; then
+    curl -fsSL "$art_url" -o "$cached" 2>/dev/null || rm -f "$cached"
+  fi
+  [[ -s "$cached" ]] && art_path="$cached"
+fi
+
+# "Waveform": deterministic per-track shape seeded from title+artist+album.
+# NOT real decoded audio - MPRIS/playerctl never expose raw samples, so
+# there's no source for genuine peak data here. Same track always draws
+# the same shape instead of jittering randomly every poll.
+seed=$(printf '%s' "${title}${artist}${album}" | cksum | cut -d' ' -f1)
+[[ -z "$seed" || "$seed" == "0" ]] && seed=42
+
+played_ratio="0"
+if [[ "$length_s" -gt 0 ]]; then
+  played_ratio=$(awk -v p="$position_s" -v l="$length_s" \
+    'BEGIN { r = p / l; if (r > 1) r = 1; if (r < 0) r = 0; print r }')
+fi
+
+dots_json=$(awk -v seed="$seed" -v n="$DOTS" -v ratio="$played_ratio" '
+  BEGIN {
+    srand(seed)
+    printf "["
+    for (i = 0; i < n; i++) {
+      h = 4 + int(rand() * 15)
+      played = (i / n <= ratio) ? "true" : "false"
+      printf "%s{\"h\":%d,\"played\":%s}", (i == 0 ? "" : ","), h, played
+    }
+    printf "]"
+  }
+')
+
+jq -n \
+  --arg status "$status" \
+  --arg title "$title" \
+  --arg artist "$artist" \
+  --arg art "$art_path" \
+  --arg elapsed "$elapsed" \
+  --arg duration "$duration" \
+  --argjson dots "$dots_json" \
+  '{
+    active: true, status: $status,
+    title: $title, artist: $artist, art: $art,
+    elapsed: $elapsed, duration: $duration,
+    dots: $dots
+  }'
