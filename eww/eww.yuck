@@ -2,7 +2,7 @@
 (include "./plasmusic.yuck")
 
 ;; Time vars
-(defpoll HOUR :interval "5s" `date +\"%I\"`)
+(defpoll HOUR :interval "5s" `date +\"%H\"`)
 (defpoll MIN :interval "5s" `date +\"%M\"`)
 
 (defwidget clock []
