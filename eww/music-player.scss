@@ -17,7 +17,6 @@ $player-bg: #0a0a0a;
 $player-glow: rgba(226, 32, 31, 0.53);
 $text-primary: $nothing-base;
 $text-secondary: $nothing-muted;
-$accent-red: #d13b2e;
 $dot-idle: #3a3a3a;
 $dot-active: $nothing-base;
 $btn-bg: $nothing-base;
@@ -61,11 +60,22 @@ $btn-icon: #0a0a0a;
   min-height: 40px;
   padding: 0;
   border-radius: 50%;
+  border: 1px solid transparent;
   background-color: transparent;
+  transition: all 250ms ease-in-out;
+}
+
+.transport button.prev:hover,
+.transport button.next:hover {
+  border: 1px solid $nothing-muted;
 }
 
 .transport button.play-pause {
   background-color: $btn-bg;
+}
+
+.transport button.play-pause:hover {
+  background-color: $nothing-accent;
 }
 
 .time {
