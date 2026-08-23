@@ -59,9 +59,11 @@ local music = "deezer-enhanced"
 
 hl.on("hyprland.start", function ()
   hl.exec_cmd("waybar & hyprpaper")
-  hl.exec_cmd("eww open clock")
+  hl.exec_cmd("swaync")
+  hl.exec_cmd("eww daemon")
+  hl.exec_cmd("sh -c 'sleep 1 && eww open clock'")
   hl.exec_cmd(music, { workspace = "10 silent" })
-  hl.exec_cmd("eww open plasmusic-window")
+  hl.exec_cmd("sh -c 'sleep 1.5 && eww open music-player'")
   hl.exec_cmd("systemctl --user start hyprpolkitagent")
   hl.exec_cmd("systemctl --user start xdg-desktop-portal-hyprland")
 end)
