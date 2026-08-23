@@ -94,6 +94,7 @@ $btn-icon: #0a0a0a;
   border-radius: 2px;
   background-color: $dot-idle;
   margin: 0 2px;
+  transition: background-color 500ms ease-in-out;
 }
 
 .scrubber .dot.played {
