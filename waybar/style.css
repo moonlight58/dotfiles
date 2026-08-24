@@ -43,7 +43,8 @@ window#waybar {
 
 #battery,
 #pulseaudio,
-#network {
+#network,
+#bluetooth {
   color: @nothing-muted;
   min-width: 32px;
   min-height: 32px;
@@ -69,11 +70,21 @@ window#waybar {
   color: red;
 }
 
-#pulseaudio {
-  padding-left: 5px;
+#network {
+  padding-right: 10px;
 }
 
 #network:hover {
+  color: @nothing-accent;
+}
+
+#bluetooth {
+  min-width: 20px;
+  min-height: 20px;
+  padding-left: 5px;
+}
+
+#bluetooth:hover {
   color: @nothing-accent;
 }
 

@@ -19,6 +19,7 @@
   "group/right-pill": {
     "orientation": "horizontal",
     "modules": [
+      "bluetooth",
       "network",
       "pulseaudio",
       "battery"
@@ -29,17 +30,26 @@
     "format": ""
   },
 
-  "tray": {
-    "icon-size": 13,
-    "spacing": 8
-  },
-
   "custom/weather": {
     "format": "{}",
     "tooltip": true,
-    "interval": 1800,
+    "interval": 60,
     "exec": "/home/moon/.config/waybar/scripts/weather-stats/weather-stats",
     "return-type": "json"
+  },
+
+  "bluetooth": {
+    "format": "{icon}",
+    "format-icons": {
+      "enabled": "󰂯",
+      "disabled": "󰂲"
+    },
+    "format-connected": "󰂱 {num_connections}",
+    "format-connected-battery": "󰂱 {device_battery_percentage}%",
+    "tooltip-format": "{controller_alias}\t{controller_address}",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "on-click": "blueman-manager",
   },
 
   "network": {
@@ -54,7 +64,7 @@
     "format": "{icon} {volume}",
     "format-muted": "",
     "format-icons": {
-      "default": ["\uf026", "\uf027", "\uf028"]
+      "default": ["", "", "", ""]
     },
     "on-click": "pavucontrol"
   },
@@ -68,7 +78,8 @@
     "format-icons": {
       "default": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
       "charging": ["󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"]
-    }
+    },
+    "tooltip-format": "{capacity}%"
   },
 
   "clock": {
