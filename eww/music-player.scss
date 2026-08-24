@@ -13,7 +13,7 @@
 //     instead of the layered ::before/::after trick.
 // ---------------------------------------------------------------------------
 
-$player-bg: #0a0a0a;
+$player-bg: $nothing-bg;
 $player-glow: rgba(226, 32, 31, 0.53);
 $text-primary: $nothing-base;
 $text-secondary: $nothing-muted;

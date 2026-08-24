@@ -1,9 +1,10 @@
-$bg-circle: #1B1C1D;
+$nothing-bg: #1B1C1D;
 $nothing-base: #F5F5F0;
 $nothing-muted: rgba(245, 245, 240, 0.55);
 $nothing-accent: #E2201F;
 
 @import "music-player";
+@import "monitor";
 
 * {
   all: unset;

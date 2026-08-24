@@ -1,0 +1,36 @@
+.monitor {
+  background-color: $nothing-bg;
+  border-radius: 14px;
+  padding: 18px 22px;
+}
+
+.metric-monitor {
+  font-size: 14px;
+  color: $nothing-base;
+  padding: 0 8px;
+}
+
+.icon-metric,
+.label-metric,
+.progress-metric,
+.value-metric {
+  margin: 0 8px;
+}
+
+.icon-metric {
+  font-size: 30px;
+}
+
+.progress-metric {
+  min-height: 10px;
+  color: $nothing-base;
+  border-radius: 14px;
+
+  trough {
+    background-color: $nothing-muted;
+  }
+
+  progress {
+    background-color: $nothing-base;
+  }
+}

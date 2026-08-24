@@ -1,5 +1,6 @@
 ;; Import widgets
 (include "./music-player.yuck")
+(include "./monitor.yuck")
 
 ;; Time vars
 (defpoll HOUR :interval "5s" `date +\"%H\"`)
@@ -12,7 +13,7 @@
   (label :class "time_min" :text MIN)))
 
 (defwindow clock :stacking "bg" :monitor 0 :focusable "false"
-  :geometry (geometry :x "60%" 
+  :geometry (geometry :x "65%" 
                       :y "73%" 
                       :width "700px"
                       :height "300px")

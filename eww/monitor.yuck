@@ -1,0 +1,39 @@
+(defwidget monitor []
+  (box :class "monitor"
+       :orientation "v"
+       :space-evenly false
+       (metric :icon ""
+               :label "CPU"
+               :bar {EWW_CPU.avg}
+               :perc {round(EWW_CPU.avg, 2)})
+       (metric :icon ""
+               :label "RAM"
+               :bar {EWW_RAM.used_mem_perc}
+               :perc {round(EWW_RAM.used_mem_perc, 2)})))
+
+(defwidget metric [icon label bar perc]
+  (box :class "metric-monitor"
+       :orientation "h"
+       :space-evenly false
+
+       (label    :class "icon-metric"
+                 :text icon)
+       (label    :class "label-metric"
+                 :text label)
+       (progress :class "progress-metric"
+                 :valign "center"
+                 :orientation "h"
+                 :value bar)
+       (label    :class "value-metric"
+                 :text "${perc}%")))
+
+(defwindow monitor
+  :monitor 0
+  :stacking "bg"
+  :focusable "false"
+  :geometry (geometry :x "0%"
+                      :y "0%"
+                      :width "460px"
+                      :height "200px"
+                      :anchor "bottom center")
+  (monitor))
