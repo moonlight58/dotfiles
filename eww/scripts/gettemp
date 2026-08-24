@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+sensors -j 2>/dev/null \
+  | jq '.["coretemp-isa-0000"]["Package id 0"].temp1_input' \
+  | awk '{printf "%.0f\n", $1}'

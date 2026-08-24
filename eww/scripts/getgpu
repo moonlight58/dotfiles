@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+sudo intel_gpu_top -J -s 500 -o - -n 1 2>/dev/null \
+  | jq '.[0].engines["Render/3D"].busy' \
+  | awk '{printf "%.0f\n", $1}'

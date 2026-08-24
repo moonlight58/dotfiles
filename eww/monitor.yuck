@@ -1,17 +1,33 @@
+(defpoll gpu_usage
+  :interval "1s"
+  :initial "0"
+  "~/.config/eww/scripts/getgpu")
+
+(defpoll cpu_temp
+  :interval "5s"
+  :initial "0"
+  "~/.config/eww/scripts/gettemp")
+
 (defwidget monitor []
   (box :class "monitor"
        :orientation "v"
-       :space-evenly false
-       (metric :icon ""
+       :space-evenly true
+       (metric :icon ""
                :label "CPU"
                :bar {EWW_CPU.avg}
-               :perc {round(EWW_CPU.avg, 2)})
-       (metric :icon ""
+               :perc {round(EWW_CPU.avg, 2)}
+               :temp {cpu_temp})
+       (metric :icon ""
                :label "RAM"
                :bar {EWW_RAM.used_mem_perc}
-               :perc {round(EWW_RAM.used_mem_perc, 2)})))
+               :perc {round(EWW_RAM.used_mem_perc, 2)})
+       (metric :icon "󰢮"
+               :label "GPU"
+               :bar {gpu_usage}
+               :perc {gpu_usage}
+               :temp {cpu_temp})))
 
-(defwidget metric [icon label bar perc]
+(defwidget metric [icon label bar perc ?temp]
   (box :class "metric-monitor"
        :orientation "h"
        :space-evenly false
@@ -25,7 +41,15 @@
                  :orientation "h"
                  :value bar)
        (label    :class "value-metric"
-                 :text "${perc}%")))
+                 :halign "end"
+                 :xalign 1
+                 :text "${perc}%")
+       (label    :class "temp-icon-metric"
+                 :visible {temp != ""}
+                 :text "")
+       (label    :class "temp-metric"
+                 :visible {temp != ""}
+                 :text "${temp}°")))
 
 (defwindow monitor
   :monitor 0
@@ -33,7 +57,7 @@
   :focusable "false"
   :geometry (geometry :x "0%"
                       :y "0%"
-                      :width "460px"
+                      :width "350px"
                       :height "200px"
                       :anchor "bottom center")
   (monitor))

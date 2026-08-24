@@ -2,6 +2,8 @@
   background-color: $nothing-bg;
   border-radius: 14px;
   padding: 18px 22px;
+  font-weight: bold;
+  font-family: "JetBrainsMono Nerd Font"
 }
 
 .metric-monitor {
@@ -19,6 +21,11 @@
 
 .icon-metric {
   font-size: 30px;
+  margin: 0 15px 0 0;
+}
+
+.label-metric {
+  font-weight: bold;
 }
 
 .progress-metric {
@@ -33,4 +40,21 @@
   progress {
     background-color: $nothing-base;
   }
+}
+
+.value-metric {
+  font-family: "Nothing Font (5x7)";
+  color: $nothing-base;
+  min-width: 60px;
+}
+
+.temp-icon-metric {
+  font-size: 20px;
+  margin: 0 5px 0 10px;
+  color: $nothing-accent;
+}
+
+.temp-metric {
+  font-family: "Nothing Font (5x7)";
+  margin: 0 4px 0 0;
 }
