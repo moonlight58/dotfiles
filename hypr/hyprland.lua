@@ -61,9 +61,10 @@ hl.on("hyprland.start", function ()
   hl.exec_cmd("waybar & hyprpaper")
   hl.exec_cmd("swaync")
   hl.exec_cmd("eww daemon")
-  hl.exec_cmd("sh -c 'sleep 1 && eww open clock'")
+  hl.exec_cmd("eww open clock")
   hl.exec_cmd(music, { workspace = "10 silent" })
-  hl.exec_cmd("sh -c 'sleep 1.5 && eww open music-player'")
+  hl.exec_cmd("eww open music-player")
+  hl.exec_cmd("eww open monitor")
   hl.exec_cmd("systemctl --user start hyprpolkitagent")
   hl.exec_cmd("systemctl --user start xdg-desktop-portal-hyprland")
 end)
@@ -285,7 +286,7 @@ hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
 
 -- Take a region screenshot
-hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("hyprshot -m region --clipboard-only"))
+hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("hyprshot -m region -o ~/Pictures/Screenshots"))
 
 -- Color picker using hyprpicker
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("hyprpicker -a"))
