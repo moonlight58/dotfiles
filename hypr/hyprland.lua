@@ -38,7 +38,7 @@ hl.monitor({
 -- Set programs that you use
 local terminal    = "kitty"
 local fileManager = "dolphin"
-local menu = "rofi -show drun -theme ~/.config/rofi/nothing.rasi"
+local menu = "rofi -show drun -modes \"drun,run\" -theme ~/.config/rofi/nothing.rasi"
 local music = "deezer-enhanced"
 
 
@@ -59,6 +59,7 @@ local music = "deezer-enhanced"
 
 hl.on("hyprland.start", function ()
   hl.exec_cmd("waybar & hyprpaper")
+  hl.exec_cmd("hyprctl setcursor Nordzy-hyprcursors-white 32")
   hl.exec_cmd("swaync")
   hl.exec_cmd("eww daemon")
   hl.exec_cmd("eww open clock")
