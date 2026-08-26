@@ -1,91 +1,225 @@
+/**
+ *
+ * Original Author : Aditya Shakya (adi1090x)
+ * Github          : @adi1090x
+ * Recolored       : Nothing OS palette (black / white / red)
+ * Rofi Version    : 1.7.3
+ **/
+
+/*****----- Configuration -----*****/
+configuration {
+	modi:                       "drun,run,filebrowser,window";
+    show-icons:                 true;
+    display-drun:               "APPS";
+    display-run:                "RUN";
+    display-filebrowser:        "FILES";
+    display-window:             "WINDOW";
+	drun-display-format:        "{name}";
+	window-format:              "{w} · {c} · {t}";
+}
+
+/*****----- Global Properties -----*****/
 * {
-    bg-color:     #1B1C1D;
-    nothing-base:  #FDFDFD;
-    nothing-accent: #E2201F;
-    nothing-muted: rgba(245, 240, 240, 0.55);
+    /* fixed: original said "JetBrains Mono Nerd Font" (with a space) -
+       the actual Nerd Font family name has no space, so that would
+       silently fall back to a default font instead of rendering. */
+    font:                        "JetBrainsMono Nerd Font 10";
 
-    background-color:  transparent;
-    text-color:        @nothing-base;
-    font:              "JetBrainsMono Nerd Font 11";
+    /* Nothing OS tokens - same values as nothing.rasi / style.css.
+       Duplicated here on purpose for now; see note about @import
+       if you want a single shared source of truth instead. */
+    bg-color:                    #1B1C1D;
+    bg-alt:                      #232425;
+    nothing-base:                #FDFDFD;
+    nothing-accent:              #E2201F;
+    nothing-muted:                rgba(245, 240, 240, 0.55);
+
+    background:                  @bg-color;
+    background-alt:              @bg-alt;
+    foreground:                  @nothing-base;
+    selected:                    @nothing-accent;
+    active:                      rgba(226, 32, 31, 0.35);
+    urgent:                      @nothing-accent;
 }
 
+/*****----- Main Window -----*****/
 window {
-    transparency: "real";
-    background-color: transparent;
-    location: center;
-    anchor: center;
-    width: 600px;
-    border-radius: 10px;
+    /* properties for window widget */
+    transparency:                "real";
+    location:                    center;
+    anchor:                      center;
+    fullscreen:                  false;
+    width:                       1000px;
+    x-offset:                    0px;
+    y-offset:                    0px;
+
+    /* properties for all widgets */
+    enabled:                     true;
+    border-radius:               15px;
+    cursor:                      "default";
+    background-color:            @background;
 }
 
+/*****----- Main Box -----*****/
 mainbox {
-    background-color: @bg-color;
-    border-radius: 10px;
-    padding: 14px;
-    children: [ inputbar, listview ];
+    enabled:                     true;
+    spacing:                     0px;
+    background-color:            transparent;
+    orientation:                 horizontal;
+    children:                    [ "imagebox", "listbox" ];
 }
 
+imagebox {
+    padding:                     20px;
+    background-color:            transparent;
+    background-image:            url("~/.wallpapers/Nothing1.png", height);
+    orientation:                 vertical;
+    children:                    [ "inputbar", "dummy", "mode-switcher" ];
+}
+
+listbox {
+    spacing:                     20px;
+    padding:                     20px;
+    background-color:            transparent;
+    orientation:                 vertical;
+    children:                    [ "message", "listview" ];
+}
+
+dummy {
+    background-color:            transparent;
+}
+
+/*****----- Inputbar -----*****/
 inputbar {
-    background-color: rgba(0, 0, 0, 0.35);
-    border-radius: 4px;
-    padding: 10px 16px;
-    spacing: 8px;
-    children: [ prompt, entry ];
+    enabled:                     true;
+    spacing:                     10px;
+    padding:                     15px;
+    border-radius:               10px;
+    background-color:            @background-alt;
+    text-color:                  @foreground;
+    children:                    [ "textbox-prompt-colon", "entry" ];
 }
-
-prompt {
-    text-color: @nothing-accent;
-    font: "Nothing Font (5x7)";
+textbox-prompt-colon {
+    enabled:                     true;
+    expand:                      false;
+    str:                         "";
+    background-color:            inherit;
+    text-color:                  @nothing-accent;
 }
-
 entry {
-    placeholder: "Search";
-    placeholder-color: @nothing-muted;
-    text-color: @nothing-base;
-    cursor: text;
+    enabled:                     true;
+    background-color:            inherit;
+    text-color:                  inherit;
+    cursor:                      text;
+    placeholder:                 "Search";
+    placeholder-color:           @nothing-muted;
 }
 
+/*****----- Mode Switcher -----*****/
+mode-switcher{
+    enabled:                     true;
+    spacing:                     20px;
+    background-color:            transparent;
+    text-color:                  @foreground;
+}
+button {
+    padding:                     15px;
+    border-radius:               10px;
+    background-color:            @background-alt;
+    text-color:                  @nothing-muted;
+    cursor:                      pointer;
+}
+button selected {
+    background-color:            @selected;
+    text-color:                  @nothing-base;
+}
+
+/*****----- Listview -----*****/
 listview {
-    background-color: transparent;
-    margin: 12px 0px 0px 0px;
-    spacing: 4px;
-    lines: 8;
-    cycle: true;
-    dynamic: true;
-    scrollbar: false;
+    enabled:                     true;
+    columns:                     1;
+    lines:                       8;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                true;
+    fixed-columns:               true;
+    
+    spacing:                     10px;
+    background-color:            transparent;
+    text-color:                  @foreground;
+    cursor:                      "default";
 }
 
+/*****----- Elements -----*****/
 element {
-    background-color: transparent;
-    text-color: @nothing-muted;
-    border-radius: 4px;
-    padding: 8px 14px;
-    orientation: horizontal;
-    spacing: 10px;
+    enabled:                     true;
+    spacing:                     15px;
+    padding:                     8px;
+    border-radius:               10px;
+    background-color:            transparent;
+    text-color:                  @nothing-muted;
+    cursor:                      pointer;
 }
-
-element-icon {
-    size: 18px;
-    vertical-align: 0.5;
-}
-
-element-text {
-    vertical-align: 0.5;
-    text-color: inherit;
-}
-
 element normal.normal {
-    text-color: @nothing-muted;
+    background-color:            inherit;
+    text-color:                  inherit;
 }
-
+element normal.urgent {
+    background-color:            @urgent;
+    text-color:                  @nothing-base;
+}
+element normal.active {
+    background-color:            @active;
+    text-color:                  @nothing-base;
+}
 element selected.normal {
-    background-image: linear-gradient(to right, #e2201f88, #1b1c1d, #1b1c1d, #1b1c1d);
-    text-color: @nothing-base;
-    border-radius: 0;
-    border: 0px 0px 0px 2px;
-    border-color: @nothing-accent;
+    border:                      0px 0px 0px 2px;
+    border-radius:               0;
+    border-color:                @nothing-accent;
+    background-image:            linear-gradient(to right, #e2201f88, #1b1c1d);
+    background-color:            none;
+    text-color:                  @nothing-base;
+}
+element selected.urgent {
+    background-color:            @urgent;
+    text-color:                  @nothing-base;
+}
+element selected.active {
+    background-color:            @urgent;
+    text-color:                  @nothing-base;
+}
+element-icon {
+    background-color:            transparent;
+    text-color:                  inherit;
+    size:                        32px;
+    cursor:                      inherit;
+}
+element-text {
+    background-color:            transparent;
+    text-color:                  inherit;
+    cursor:                      inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
 }
 
-element alternate.normal {
-    background-color: transparent;
+/*****----- Message -----*****/
+message {
+    background-color:            transparent;
+}
+textbox {
+    padding:                     15px;
+    border-radius:               10px;
+    background-color:            @background-alt;
+    text-color:                  @foreground;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+}
+error-message {
+    padding:                     15px;
+    border-radius:               20px;
+    background-color:            @background;
+    text-color:                  @nothing-accent;
 }
