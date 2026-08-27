@@ -128,10 +128,10 @@ terminal, boot menu):
 
 | Font | Where it's used | Notes |
 |---|---|---|
-| **Nothing Font (5x7)** | EWW clock, Waybar clock, Hyprlock time | Dot-matrix display font |
-| **NDot55** | SDDM theme | Loaded via `FontLoader` in `Main.qml` |
-| **NType82** | SDDM `theme.conf` | Fallback/system-level SDDM font |
-| **JetBrainsMono Nerd Font** | Kitty, Rofi, Waybar, Hyprlock, monitor widget | Monospace + glyph icons |
+| [**Nothing Font (5x7)**](https://fontstruct.com/fontstructions/show/2095104/nothing-font-5x7) | EWW clock, Waybar clock, Hyprlock time | Dot-matrix display font |
+| [**NDot55**](https://online-fonts.com/fonts/ndot-55/download) | SDDM theme | Loaded via `FontLoader` in `Main.qml` |
+| [**NType82**](https://online-fonts.com/fonts/ntype-82) | SDDM `theme.conf` | Fallback/system-level SDDM font |
+| [**JetBrainsMono Nerd Font**](https://fonts.google.com/specimen/JetBrains+Mono) | Kitty, Rofi, Waybar, Hyprlock, monitor widget | Monospace + glyph icons |
 
 ---
 
