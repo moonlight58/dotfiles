@@ -77,6 +77,10 @@ window#waybar {
   color: @nothing-accent;
 }
 
+#pulseaudio:hover {
+  color: @nothing-accent;
+}
+
 #bluetooth {
   min-width: 20px;
   min-height: 20px;
