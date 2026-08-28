@@ -1,6 +1,6 @@
 .monitor {
   background-color: $nothing-bg;
-  border-radius: 14px;
+  border-radius: 22px;
   padding: 18px 22px;
   font-weight: bold;
   font-family: "JetBrainsMono Nerd Font"
@@ -32,14 +32,16 @@
 .progress-metric {
   min-height: 10px;
   color: $nothing-base;
-  border-radius: 14px;
+  padding-bottom: 5px;
 
   trough {
     background-color: $nothing-muted;
+    border-radius: 14px;
   }
 
   progress {
     background-color: $nothing-base;
+    border-radius: 14px;
   }
 }
 

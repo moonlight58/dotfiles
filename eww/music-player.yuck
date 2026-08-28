@@ -38,12 +38,12 @@
 
       (box :class "transport" :orientation "h" :space-evenly false :spacing 8 :valign "center"
         (button :class "prev" :onclick "playerctl previous"
-          (image :path "/home/moon/.config/eww/assets/icons/prev.svg" :image-width 18 :image-height 18))
+          (image :path "/home/moon/.config/eww/assets/icons/prev.svg" :image-width 26 :image-height 26))
         (button :class "play-pause" :onclick "playerctl play-pause"
           (image :path {music-player-data.status == "Playing" ? "/home/moon/.config/eww/assets/icons/pause.svg" : "/home/moon/.config/eww/assets/icons/play.svg"}
                  :image-width 16 :image-height 16))
         (button :class "next" :onclick "playerctl next"
-          (image :path "/home/moon/.config/eww/assets/icons/next.svg" :image-width 18 :image-height 18))))
+          (image :path "/home/moon/.config/eww/assets/icons/next.svg" :image-width 26 :image-height 26))))
 
     (box :class "scrub-row" :orientation "h" :space-evenly false :spacing 10
 
