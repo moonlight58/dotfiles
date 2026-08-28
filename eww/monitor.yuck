@@ -46,7 +46,7 @@
                  :text "${perc}%")
        (label    :class "temp-icon-metric"
                  :visible {temp != ""}
-                 :text "")
+                 :text "󰈸")
        (label    :class "temp-metric"
                  :visible {temp != ""}
                  :text "${temp}°")))
