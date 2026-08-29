@@ -1,15 +1,14 @@
 .monitor {
   background-color: $nothing-bg;
   border-radius: 22px;
-  padding: 18px 22px;
+  padding: 18px 30px;
   font-weight: bold;
-  font-family: "JetBrainsMono Nerd Font"
+  font-family: "JetBrainsMono Nerd Font";
 }
 
 .metric-monitor {
   font-size: 14px;
   color: $nothing-base;
-  padding: 0 8px;
   border-radius: 14px;
 }
 
