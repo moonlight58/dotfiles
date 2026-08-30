@@ -1,18 +1,3 @@
-// ---------------------------------------------------------------------------
-// Music player widget styles.
-// Append this into eww.scss, or @import it if your setup supports partials.
-//
-// NOTE: eww's SCSS compiles down to GTK's CSS subset, not full browser CSS.
-// A few things from the HTML mockup don't have a direct equivalent here:
-//   - text-overflow/ellipsis  -> handled via the `label`'s :limit-width and
-//     :truncate properties in music-player.yuck, not CSS.
-//   - flex: 1 / min-width: 0  -> use :hexpand on the eww widget instead.
-//   - element::before/::after pseudo-elements for the vinyl grooves -> GTK
-//     CSS doesn't support generated content, so the fallback art placeholder
-//     below is a plain radial-gradient circle with a center dot child box
-//     instead of the layered ::before/::after trick.
-// ---------------------------------------------------------------------------
-
 .player {
   padding: 18px 22px;
   border-radius: 22px;
@@ -82,7 +67,7 @@
 .scrubber .dot {
   min-width: 2px;
   border-radius: 2px;
-  background-color: $dot-idle;
+  background-color: $nothing-idle;
   margin: 0 2px;
   transition: background-color 500ms ease-in-out;
 }

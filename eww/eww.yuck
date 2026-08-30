@@ -1,6 +1,7 @@
 ;; Import widgets
 (include "./music-player.yuck")
 (include "./monitor.yuck")
+(include "./nothing-clock.yuck")
 
 ;; Time vars
 (defpoll HOUR :interval "5s" `date +\"%H\"`)

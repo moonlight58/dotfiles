@@ -1,0 +1,31 @@
+.calendar-box {
+  background-color: $nothing-bg;
+  border-radius: 35px;
+  padding: 15px;
+  min-width: 150px;
+  min-height: 200px;
+}
+
+.calendar-month,
+.calendar-day {
+  color: $nothing-base;
+  font-family: "Nothing Font (5x7)";
+  font-weight: bold;
+  border-radius: 25px;
+  min-width: 50px;
+  min-height: 50px;
+}
+
+.calendar-month {
+  background-color: $nothing-idle;
+}
+
+.calendar-day {
+  background-color: $nothing-accent;
+}
+
+.calendar-number {
+  color: $nothing-base;
+  font-family: "NType 82";
+  font-size: 110px;
+}

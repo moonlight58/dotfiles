@@ -1,0 +1,26 @@
+(defpoll DAY        :interval "3600s" `date +\"%a\"`)
+(defpoll MONTH      :interval "3600s" `date +\"%b\"`)
+(defpoll NUMBER_DAY :interval "3600s" `date +\"%d\"`)
+
+(defwidget day []
+  (box :class "calendar-box"
+       :orientation "h"
+       :space-evenly false
+    (label :class "calendar-month"
+           :valign "start"
+           :text MONTH)
+    (label :class "calendar-number"
+           :text NUMBER_DAY)
+    (label :class "calendar-day"
+           :valign "end"
+           :text DAY)))
+
+(defwindow day 
+           :stacking "bg" 
+           :monitor 0 
+           :focusable "false"
+           :geometry (geometry :x "0%"
+                               :y "0%"
+                               :width "150px"
+                               :height "200px")
+           (day))
