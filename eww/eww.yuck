@@ -21,7 +21,7 @@
                  :monitor 0
                  :anchor "bottom right"
                  :focusable "false"
-                 :geometry (geometry :x "65%" 
+                 :geometry (geometry :x "63%" 
                                      :y "75%" 
                                      :width "300px"
                                      :height "100px")
