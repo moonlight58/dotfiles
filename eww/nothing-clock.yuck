@@ -1,5 +1,5 @@
 (defpoll DAY        :interval "3600s" `date +\"%a\"`)
-(defpoll MONTH      :interval "3600s" `date +\"%b\"`)
+(defpoll MONTH      :interval "3600s" `date +\"%^b\"`)
 (defpoll NUMBER_DAY :interval "3600s" `date +\"%d\"`)
 
 (defwidget day []
