@@ -108,6 +108,14 @@ Every visual layer of the system was touched:
 
 </td>
 </tr>
+<tr>
+<td>
+
+**EWW Clock Widget**
+![Clock widget](assets/screenshots/clock-widget.png)
+
+</td>
+</tr>
 </table>
 
 ---
