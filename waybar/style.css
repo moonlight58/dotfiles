@@ -94,6 +94,11 @@ window#waybar {
 #custom-weather {
   padding: 4px 24px 4px 14px;
   color: @nothing-muted;
+  transition: color 150ms ease-in-out;
+}
+
+#custom-weather:hover {
+  color: @nothing-accent;
 }
 
 #workspaces {
