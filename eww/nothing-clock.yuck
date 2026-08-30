@@ -1,5 +1,5 @@
-(defpoll DAY        :interval "3600s" `date +\"%a\"`)
-(defpoll MONTH      :interval "3600s" `date +\"%^b\"`)
+(defpoll DAY_CLOCK        :interval "3600s" `date +\"%a\"`)
+(defpoll MONTH_UPPERCASE      :interval "3600s" `date +\"%^b\"`)
 (defpoll NUMBER_DAY :interval "3600s" `date +\"%d\"`)
 
 (defwidget day []
@@ -8,12 +8,12 @@
        :space-evenly false
     (label :class "calendar-month"
            :valign "start"
-           :text MONTH)
+           :text MONTH_UPPERCASE)
     (label :class "calendar-number"
            :text NUMBER_DAY)
     (label :class "calendar-day"
            :valign "end"
-           :text DAY)))
+           :text DAY_CLOCK)))
 
 (defwindow day 
            :stacking "bg" 

@@ -6,16 +6,23 @@
 ;; Time vars
 (defpoll HOUR :interval "5s" `date +\"%H\"`)
 (defpoll MIN :interval "5s" `date +\"%M\"`)
+(defpoll MONTH :interval "5s" `date +\"%B\"`)
+(defpoll DAY :interval "5s" `date +\"%d  %a\"`)
 
 (defwidget clock []
- (box :orientation "h" :space-evenly false :halign "center"
-  (label :class "time_hour" :text HOUR)
-  (label :class "time_divider" :text ":")
-  (label :class "time_min" :text MIN)))
+  (box :orientation "h" :space-evenly false :halign "center"
+    (label :class "clock-day"     :text DAY :angle 90)
+    (label :class "clock-hour"    :text HOUR)
+    (label :class "clock-divider" :text ":")
+    (label :class "clock-min"     :text MIN)
+    (label :class "clock-month"   :text MONTH :angle 90)))
 
-(defwindow clock :stacking "bg" :monitor 0 :focusable "false"
-  :geometry (geometry :x "65%" 
-                      :y "73%" 
-                      :width "700px"
-                      :height "300px")
+(defwindow clock :stacking "bg" 
+                 :monitor 0
+                 :anchor "bottom right"
+                 :focusable "false"
+                 :geometry (geometry :x "65%" 
+                                     :y "75%" 
+                                     :width "300px"
+                                     :height "100px")
     (clock))
