@@ -63,7 +63,7 @@
   :stacking "bg"
   :exclusive false
   :focusable "false"
-  :geometry (geometry  :x "8%"
+  :geometry (geometry  :x "18%"
                        :y "2%"
                        :width "460px"
                        :height "110px"
