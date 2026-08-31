@@ -1,0 +1,76 @@
+# =============================================================
+#  Alacritty — Nothing OS theme (flat, black/white/red)
+#  Converted from Kitty configuration
+# =============================================================
+
+[font]
+size = 11.0
+
+[font.normal]
+family = "JetBrainsMono NF"
+style = "Regular"
+
+[font.bold]
+family = "JetBrainsMono NF"
+style = "Bold"
+
+[font.italic]
+family = "JetBrainsMono NF"
+style = "Italic"
+
+[font.bold_italic]
+family = "JetBrainsMono NF"
+style = "Bold Italic"
+
+[colors.primary]
+foreground = "#fdfdfd"
+background = "#1b1c1d"
+
+[colors.selection]
+text = "#1b1c1d"
+background = "#fdfdfd"
+
+[colors.normal]
+black   = "#45475a"
+red     = "#f38ba8"
+green   = "#a6e3a1"
+yellow  = "#f9e2af"
+blue    = "#89b4fa"
+magenta = "#f5c2e7"
+cyan    = "#94e2d5"
+white   = "#fdfdfd"
+
+[colors.bright]
+black   = "#585b70"
+red     = "#f38ba8"
+green   = "#a6e3a1"
+yellow  = "#f9e2af"
+blue    = "#89b4fa"
+magenta = "#f5c2e7"
+cyan    = "#94e2d5"
+white   = "#ffffff"
+
+[cursor]
+style = { shape = "Block", blinking = "Never" }
+
+[cursor.colors]
+text = "#1b1c1d"
+cursor = "#e2201f"
+
+[window]
+opacity = 0.8
+decorations = "Full"
+
+[window.padding]
+x = 5
+y = 5
+
+[window.dimensions]
+columns = 120
+lines = 30
+
+[scrolling]
+history = 10000
+
+[env]
+TERM = "xterm-256color"
