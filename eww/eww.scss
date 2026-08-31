@@ -26,6 +26,11 @@ $nothing-idle: #3a3a3a;
   margin: 0;
 }
 
+.clock-hour,
+.clock-min {
+  min-width: 256px; 
+}
+
 .clock-hour {
   color: $nothing-accent;
   margin-left: 10px;
