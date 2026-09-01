@@ -29,6 +29,7 @@ $nothing-idle: #3a3a3a;
 .clock-hour,
 .clock-min {
   min-width: 256px; 
+  min-height: 256px;
 }
 
 .clock-hour {
@@ -44,7 +45,6 @@ $nothing-idle: #3a3a3a;
 .clock-day {
   font-family: "NType 82";
   font-size: 50px;
-  padding-bottom: 15px;
 }
 
 .clock-month {

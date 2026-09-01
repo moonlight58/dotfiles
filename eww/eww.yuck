@@ -10,23 +10,19 @@
 (defpoll DAY :interval "5s" `date +\"%d  %a\"`)
 
 (defwidget clock []
-  (transform :rotate 75.0
-             :transform-origin-x "50%"  
-             :transform-origin-y "50%"  
-
-    (box :orientation "h" :space-evenly false :halign "center"
-      (label :class "clock-month"     :text MONTH :angle -90)
-        (label :class "clock-hour"    :text HOUR :limit-width 2)
-        (label :class "clock-divider" :text ":")
-        (label :class "clock-min"     :text MIN :limit-width 2)
-        (label :class "clock-day"     :text DAY :angle -90))))
+  (box :orientation "h" :space-evenly false :halign "center"
+    (label :class "clock-day"     :text DAY :angle -90)
+      (label :class "clock-hour"    :text HOUR :limit-width 2)
+      (label :class "clock-divider" :text ":")
+      (label :class "clock-min"     :text MIN :limit-width 2)
+      (label :class "clock-month"     :text MONTH :angle -90)))
 
 (defwindow clock :stacking "bg" 
                  :monitor 0
                  :anchor "center right"
                  :focusable "false"
-                 :geometry (geometry :x "79%" 
-                                     :y "15%" 
-                                     :width "100px"
-                                     :height "700px")
+                 :geometry (geometry :x "64%" 
+                                     :y "52%" 
+                                     :width "700px"
+                                     :height "110px")
     (clock))

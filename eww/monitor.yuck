@@ -55,8 +55,8 @@
   :monitor 0
   :stacking "bg"
   :focusable "false"
-  :geometry (geometry :x "55%"
+  :geometry (geometry :x "40%"
                       :y "82%"
                       :width "370px"
-                      :height "100px")
+                      :height "110px")
   (monitor))
