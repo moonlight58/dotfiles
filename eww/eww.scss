@@ -13,28 +13,21 @@ $nothing-idle: #3a3a3a;
 }
 
 .clock {
-  min-width: 130px;
-  min-height: 700px;
+  min-width: 400px;
+  min-height: 120px;
+  margin: 0;
+  padding: 0;
 }
 
 .clock-hour,
 .clock-divider,
 .clock-min {
-  font-size: 190px;
+  font-size: 160px;
   font-family: "Nothing Font (5x7)";
-  padding: 0;
-  margin: 0;
-}
-
-.clock-hour,
-.clock-min {
-  min-width: 256px; 
-  min-height: 256px;
 }
 
 .clock-hour {
   color: $nothing-accent;
-  margin-left: 10px;
 }
 
 .clock-divider,
@@ -42,12 +35,13 @@ $nothing-idle: #3a3a3a;
   color: $nothing-base;
 }
 
-.clock-day {
-  font-family: "NType 82";
+.clock-day,
+.clock-day-n,
+.clock-month {
   font-size: 50px;
+  font-family: "NType 82";
 }
 
-.clock-month {
-  font-family: "NType 82";
-  font-size: 40px;
+.clock-day-n {
+  color: $nothing-accent;
 }

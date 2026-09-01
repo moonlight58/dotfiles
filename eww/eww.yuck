@@ -4,25 +4,32 @@
 (include "./nothing-clock.yuck")
 
 ;; Time vars
-(defpoll HOUR :interval "5s" `date +\"%H\"`)
-(defpoll MIN :interval "5s" `date +\"%M\"`)
-(defpoll MONTH :interval "5s" `date +\"%B\"`)
-(defpoll DAY :interval "5s" `date +\"%d  %a\"`)
+(defpoll HOUR  :interval "5s" `date +\"%H\"`)
+(defpoll MIN   :interval "5s" `date +\"%M\"`)
+(defpoll DAY   :interval "100s" `date +\"%a\"`)
+(defpoll DAY_N :interval "100s" `date +\"%d\"`)
+(defpoll MONTH :interval "100s" `date +\"%B\"`)
 
 (defwidget clock []
-  (box :orientation "h" :space-evenly false :halign "center"
-    (label :class "clock-day"     :text DAY :angle -90)
-      (label :class "clock-hour"    :text HOUR :limit-width 2)
+  (box :orientation "v" :space-evenly false :valign "center"
+    (box :orientation "h" :space-evenly false :halign "center"
+      (label :class "clock-hour"    :text HOUR)
       (label :class "clock-divider" :text ":")
-      (label :class "clock-min"     :text MIN :limit-width 2)
-      (label :class "clock-month"     :text MONTH :angle -90)))
+      (label :class "clock-min"     :text MIN))
+
+    (box :orientation "h" :space-evenly false :halign "fill"
+      (label :class "clock-day"   :text DAY)
+      (box :hexpand true)
+      (label :class "clock-day-n" :text DAY_N)
+      (box :hexpand true)
+      (label :class "clock-month" :text MONTH))))
 
 (defwindow clock :stacking "bg" 
                  :monitor 0
-                 :anchor "center right"
                  :focusable "false"
-                 :geometry (geometry :x "64%" 
-                                     :y "52%" 
-                                     :width "700px"
-                                     :height "110px")
+                 :geometry (geometry :x "6%" 
+                                     :y "2%" 
+                                     :width "400px"
+                                     :height "120px"
+                                     :anchor "bottom right")
     (clock))
