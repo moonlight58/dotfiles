@@ -6,9 +6,9 @@
 ;; Time vars
 (defpoll HOUR  :interval "5s" `date +\"%H\"`)
 (defpoll MIN   :interval "5s" `date +\"%M\"`)
-(defpoll DAY   :interval "100s" `date +\"%a\"`)
-(defpoll DAY_N :interval "100s" `date +\"%d\"`)
-(defpoll MONTH :interval "100s" `date +\"%B\"`)
+(defpoll DAY   :interval "60s" `date +\"%a\"`)
+(defpoll DAY_N :interval "60s" `date +\"%d\"`)
+(defpoll MONTH :interval "60s" `date +\"%B\"`)
 
 (defwidget clock []
   (box :orientation "v" :space-evenly false :valign "center"
