@@ -77,6 +77,10 @@ window#waybar {
   color: @nothing-accent;
 }
 
+#pulseaudio {
+  margin-right: 5px;
+}
+
 #pulseaudio:hover {
   color: @nothing-accent;
 }
