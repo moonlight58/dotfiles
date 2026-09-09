@@ -109,10 +109,16 @@ Every visual layer of the system was touched:
 </td>
 </tr>
 <tr>
-<td>
+<td width="50%">
 
 **EWW Clock Widget**
 ![Clock widget](assets/screenshots/clock-widget.png)
+
+</td>
+<td>
+
+**Limine Config [(checkout my custom wallpaper generator)](https://github.com/moonlight58/gen-wallpaper)**
+![Limine Config](assets/screenshots/limine-preview.png)
 
 </td>
 </tr>
