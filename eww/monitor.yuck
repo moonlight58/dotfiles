@@ -56,7 +56,8 @@
   :stacking "bg"
   :focusable "false"
   :geometry (geometry :x "40%"
-                      :y "82%"
+                      :y "2.7%"
                       :width "370px"
-                      :height "110px")
+                      :height "120px"
+                      :anchor "bottom center")
   (monitor))
