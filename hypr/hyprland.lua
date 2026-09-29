@@ -62,14 +62,11 @@ hl.on("hyprland.start", function ()
   hl.exec_cmd("waybar & hyprpaper")
   hl.exec_cmd("hyprctl setcursor Nordzy-hyprcursors-white 32")
   hl.exec_cmd("swaync")
-  hl.exec_cmd("eww daemon")
-  hl.exec_cmd("eww open clock")
-  hl.exec_cmd(msg, { workspace = "9 silent" })
-  hl.exec_cmd(music, { workspace = "10 silent" })
-  hl.exec_cmd("eww open music-player")
-  hl.exec_cmd("eww open monitor")
   hl.exec_cmd("systemctl --user start hyprpolkitagent")
   hl.exec_cmd("systemctl --user start xdg-desktop-portal-hyprland")
+  hl.exec_cmd("eww daemon; eww open clock; eww open monitor; eww open music-player")
+  hl.exec_cmd(msg, { workspace = "8 silent" })
+  hl.exec_cmd(music, { workspace = "10 silent" })
 end)
 
 
@@ -105,6 +102,7 @@ hl.env("HYPRCURSOR_SIZE", "24")
 -----------------------
 ---- LOOK AND FEEL ----
 -----------------------
+local colors = require("colors")
 
 -- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
 hl.config({
@@ -115,8 +113,8 @@ hl.config({
         border_size = 3,
 
         col = {
-            active_border   = { colors = {"rgba(e2201fee)", "rgba(1b1c1dee)", "rgba(1b1c1dee)", "rgba(e2201fee)"}, angle = 45 },
-            inactive_border = "rgba(595959aa)",
+            active_border   = { colors = { colors.accent, colors.background, colors.background, colors.accent}, angle = 45 },
+            inactive_border = colors.border_inactive,
         },
 
         -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
@@ -140,7 +138,7 @@ hl.config({
             enabled      = false,
             range        = 4,
             render_power = 3,
-            color        = 0xee1a1a1a,
+            color        = colors.shadow,
         },
 
         blur = {

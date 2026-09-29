@@ -1,7 +1,9 @@
-@define-color bg-color #1B1C1D;
-@define-color nothing-base #FDFDFD;
-@define-color nothing-accent #E2201F;
-@define-color nothing-muted rgba(245, 240, 240, 0.55);
+@import url("colors.css");
+
+@define-color bg-color @background;
+@define-color nothing-base @foreground;
+@define-color nothing-accent @accent;
+@define-color nothing-muted @muted;
 
 * {
   font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", sans-serif;

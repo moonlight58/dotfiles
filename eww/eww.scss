@@ -1,8 +1,10 @@
-$nothing-bg: #1B1C1D;
-$nothing-base: #FDFDFD;
-$nothing-muted: rgba(245, 245, 240, 0.55);
-$nothing-accent: #E2201F;
-$nothing-idle: #3a3a3a;
+@import "colors";
+
+$nothing-bg: $background;
+$nothing-base: $foreground;
+$nothing-muted: $muted;
+$nothing-accent: $accent;
+$nothing-idle: $idle;
 
 @import "music-player";
 @import "monitor";
